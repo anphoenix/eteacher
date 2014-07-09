@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="vo_tw_widgetHeight">200dp</dimen>
+    <dimen name="vo_tw_toolbarHeight">60dp</dimen>
+    <dimen name="vo_tw_candidatebarHeight">60dp</dimen>
+    <dimen name="vo_tw_minButtonWidth">60dp</dimen>
+    <color name="vo_tw_backgroundColor">#272727</color>
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+
+    <ImageButton
+        android:id="@+id/vo_tw_spaceButton"
+        android:minWidth="@dimen/vo_tw_minButtonWidth"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:background="@drawable/vo_tw_btn_keyboard_key_xml"
+        android:src="@drawable/vo_tw_keyboard_space_xml"
+        android:contentDescription="@null"
+        />
+
+    <ImageButton
+        android:id="@+id/vo_tw_deleteButton"
+        android:minWidth="@dimen/vo_tw_minButtonWidth"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:background="@drawable/vo_tw_btn_keyboard_key_xml"
+        android:src="@drawable/vo_tw_keyboard_delete_xml"
+        android:contentDescription="@null"
+        />
+
+    <ImageButton
+        android:id="@+id/vo_tw_nextButton"
+        android:minWidth="@dimen/vo_tw_minButtonWidth"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:background="@drawable/vo_tw_btn_keyboard_key_xml"
+        android:src="@drawable/vo_tw_keyboard_next_xml"
+        android:contentDescription="@null"
+        />
+    
+</LinearLayout>

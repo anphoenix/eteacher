@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Lazy Teacher</string>
+    <string name="activity_name">Lazy Teacher</string>
+    
+    <string name="vo_tw_defaultText"></string>
+
+    <string name="vo_tw_configSuccess">Configuration succeeded</string>
+    <string name="vo_tw_configFailed">Configuration failed</string>
+    
+    <string name="vo_tw_returnGestureToast">Return gesture at index %d</string>
+    <string name="vo_tw_pinchGestureToast">Pinch gesture detected</string>
+    
+    <string name="result_title">你的成绩</string>
+
+</resources>

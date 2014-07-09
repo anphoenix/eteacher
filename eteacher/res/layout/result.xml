@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+      android:orientation="horizontal" android:layout_width="fill_parent"
+    	android:layout_height="wrap_content">
+    <!-- target field -->
+    <android.widget.TextView
+        android:id="@+id/resultTextField"
+        android:text="@string/vo_tw_defaultText"
+        android:textIsSelectable="true"
+        android:inputType="textMultiLine"
+        android:lines="1"
+        android:gravity="top|left"
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" />
+    
+    
+    </LinearLayout>
