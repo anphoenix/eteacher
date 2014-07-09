@@ -18,12 +18,12 @@ public class SampleQuestions {
 	
 //	static{
 //		questions.add("举头望明月");
-//		questions.add("春眠�?觉晓");
-//		questions.add("飞�?直下三�?�尺");
+//		questions.add("春眠�?觉晓");
+//		questions.add("飞�?直下三�?�尺");
 //		
-//		answerMap.put("举头望明月", "低头�?故乡");
-//		answerMap.put("春眠�?觉晓", "处处闻啼鸟");
-//		answerMap.put("飞�?直下三�?�尺", "疑是银河�?��?天");
+//		answerMap.put("举头望明月", "低头�?故乡");
+//		answerMap.put("春眠�?觉晓", "处处闻啼鸟");
+//		answerMap.put("飞�?直下三�?�尺", "疑是银河�?��?天");
 //	}
 	
 	public static boolean isCorrect(String que, String ans){
@@ -34,6 +34,10 @@ public class SampleQuestions {
 		else{
 			return false;
 		}
+	}
+	
+	public static String getCorrectAnswer(String que){
+		return answerMap.get(que);
 	}
 
 	public static void load(Context context) {

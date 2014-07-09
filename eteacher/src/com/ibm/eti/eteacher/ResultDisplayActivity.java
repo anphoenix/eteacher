@@ -35,14 +35,18 @@ public class ResultDisplayActivity extends Activity {
 
 	private String getGrade() {
 		List<String> qs = SampleQuestions.questions;
+		StringBuilder builder = new StringBuilder();
 		int rightCount = 0;
 		for(int i = 0; i < qs.size(); i++){
 			if (SampleQuestions.isCorrect(qs.get(i), TestActivity.answers.get(i))){
 				rightCount++;
+			} else {
+				builder.append("第" + (i + 1) + "问题答错了，正确答案是："+SampleQuestions.getCorrectAnswer(qs.get(i)) +" ,输入答案是：" + TestActivity.answers.get(i) +"\n");
 			}
 		}
-		String res = rightCount + " out of " + qs.size() + " questions correct!";
-		return res;
+		String res = "一共" + qs.size() + "道题，你答对了" + rightCount + "道题\n";
+		
+		return res + builder.toString();
 	}
 	
 	@Override

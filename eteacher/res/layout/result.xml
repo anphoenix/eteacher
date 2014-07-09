@@ -9,7 +9,7 @@
         android:text="@string/vo_tw_defaultText"
         android:textIsSelectable="true"
         android:inputType="textMultiLine"
-        android:lines="1"
+        android:lines="10"
         android:gravity="top|left"
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content" />
