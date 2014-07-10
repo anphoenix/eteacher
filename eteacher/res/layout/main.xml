@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1" />
     
-    <com.ibm.eti.eteacher.view.CustomEditText
+    <com.phoenix.eteacher.view.CustomEditText
         android:id="@+id/textField"
         android:text="@string/vo_tw_defaultText"
         android:textIsSelectable="true"

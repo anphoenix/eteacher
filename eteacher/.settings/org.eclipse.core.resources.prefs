@@ -1,7 +1,8 @@
-#Tue Jul 08 17:09:09 CST 2014
+#Thu Jul 10 10:52:03 CST 2014
 eclipse.preferences.version=1
 encoding//assets/en_US/en_US-ak-cur.lite.res=UTF-8
 encoding//assets/en_US/en_US-lk-text.lite.res=ISO-8859-1
 encoding//assets/tests.txt=UTF-8
-encoding//src/com/ibm/eti/eteacher/TestActivity.java=UTF-8
-encoding//src/com/ibm/eti/eteacher/util/SampleQuestions.java=UTF-8
+encoding//src/com/phoenix/eteacher/ResultDisplayActivity.java=UTF-8
+encoding//src/com/phoenix/eteacher/TestActivity.java=UTF-8
+encoding//src/com/phoenix/eteacher/util/SampleQuestions.java=UTF-8
