@@ -13,5 +13,6 @@
     
     <string name="result_title">你的成绩</string>
     <string name="toolbar_clear_label">Clear</string>
+    <string name="toolbar_text_label">Text</string>
 
 </resources>

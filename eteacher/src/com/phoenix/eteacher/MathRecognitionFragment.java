@@ -7,6 +7,7 @@ import com.visionobjects.myscript.certificate.MyCertificate;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,28 @@ public class MathRecognitionFragment extends Fragment{
 	        public void onClick(final View view)
 	        {
 	          mWidget.clear(true /* allow undo */);
+	        }
+	      });
+	    }
+	    
+	    View textButton = view.findViewById(R.id.vo_tw_textButton);
+	    if (textButton != null)
+	    {
+	    	textButton.setOnClickListener(new View.OnClickListener()
+	      {
+	        @Override
+	        public void onClick(final View view)
+	        {
+	        	TextRecognitionFragment textFragment = new TextRecognitionFragment();
+	        	FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+	        	// Replace whatever is in the fragment_container view with this fragment,
+	        	// and add the transaction to the back stack so the user can navigate back
+	        	transaction.replace(R.id.fragment_container, textFragment);
+//	        	transaction.addToBackStack(null);
+
+	        	// Commit the transaction
+	        	transaction.commit();
 	        }
 	      });
 	    }

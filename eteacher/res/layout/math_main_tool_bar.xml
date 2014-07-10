@@ -7,18 +7,18 @@
     <Button
         android:id="@+id/vo_math_clearButton"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:contentDescription="@null"
-        android:text="@string/toolbar_clear_label" />
+        android:text="@string/toolbar_clear_label" 
+        android:layout_weight="1" />
     
-    <ImageButton
+    <Button
         android:id="@+id/vo_tw_textButton"
-        android:minWidth="@dimen/vo_tw_minButtonWidth"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:background="@drawable/vo_tw_btn_keyboard_key_xml"
-        android:src="@drawable/vo_tw_keyboard_text_xml"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/toolbar_text_label"
         android:contentDescription="@null"
+        android:layout_weight="1"
         />
 
 </LinearLayout>

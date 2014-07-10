@@ -127,12 +127,12 @@ MathWidgetApi.OnUndoRedoListener
             return;
         }
 
-        TextRecognitionFragment firstFragment = new TextRecognitionFragment();
+        TextRecognitionFragment textFragment = new TextRecognitionFragment();
         
-        firstFragment.setArguments(getIntent().getExtras());
+        textFragment.setArguments(getIntent().getExtras());
         
         getFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, firstFragment).commit();
+                .add(R.id.fragment_container, textFragment).commit();
     }
 
     setTitle(getResources().getString(R.string.activity_name));
