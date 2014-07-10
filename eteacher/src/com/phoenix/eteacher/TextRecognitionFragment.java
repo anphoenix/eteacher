@@ -46,16 +46,36 @@ public class TextRecognitionFragment extends Fragment {
 	        	if (TestActivity.curQuestionIndex < SampleQuestions.questions.size() - 1){
 		        	TestActivity.answers.add(mEditText.getText().toString());
 		        	mLabelText.setText(SampleQuestions.questions.get(++TestActivity.curQuestionIndex));
-		        	mEditText.setText("");
-		        	mWidget.setText("");
+		        	String answer = "";
+		        	if(TestActivity.curQuestionIndex < TestActivity.answers.size())
+		        		answer = TestActivity.answers.get(TestActivity.curQuestionIndex);
+		        	mEditText.setText(answer);
+		        	mWidget.setText(answer);
 		        	return;
 	        	}
 	        	else{
 	        		TestActivity.answers.add(mEditText.getText().toString());
 	        		intent.setClass(v.getContext(), ResultDisplayActivity.class);
+	        		v.getContext().startActivity(intent);
+		        	activity.finish();
 	        	}
-	        	v.getContext().startActivity(intent);
-	        	activity.finish();
+	        }
+	      });
+	    
+	    toolbarView.findViewById(R.id.vo_tw_prevButton).setOnClickListener(new View.OnClickListener() {
+	        @Override
+	        public void onClick(View v) {
+	        	if (TestActivity.curQuestionIndex > 0){
+	        		mLabelText.setText(SampleQuestions.questions.get(--TestActivity.curQuestionIndex));
+		        	String answer = TestActivity.answers.get(TestActivity.curQuestionIndex);
+		        	if(answer == null) answer = "";
+		        	mEditText.setText(answer);
+		        	mWidget.setText(answer);
+		        	return;
+	        	}
+	        	else{
+	        		//TODO: should give a alert
+	        	}
 	        }
 	      });
 	    
