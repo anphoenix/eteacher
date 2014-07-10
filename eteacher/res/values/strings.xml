@@ -12,5 +12,6 @@
     <string name="vo_tw_pinchGestureToast">Pinch gesture detected</string>
     
     <string name="result_title">你的成绩</string>
+    <string name="toolbar_clear_label">Clear</string>
 
 </resources>

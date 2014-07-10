@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
 
+   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:orientation="vertical" android:layout_width="fill_parent"
+    	android:layout_height="fill_parent">
+    	
     <LinearLayout 
       android:orientation="vertical" android:layout_width="fill_parent"
     	android:layout_height="wrap_content">
@@ -31,25 +32,12 @@
     
     </LinearLayout>
 
-    <!-- simple toolbar -->
-    <include layout="@layout/vo_tw_tool_bar"
-        android:id="@+id/vo_tw_toolbar"
-        android:layout_alignParentBottom="true"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/vo_tw_toolbarHeight" />
-    
-    <!-- text widget -->
-    <com.visionobjects.textwidget.TextWidgetStyleable
-        android:id="@+id/vo_text_widget"
-        android:layout_above="@id/vo_tw_toolbar"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/vo_tw_widgetHeight" />
-    
-    <!-- simple candidate bar -->
-    <include layout="@layout/vo_tw_candidate_bar"
-        android:id="@+id/vo_tw_candidatebar"
-        android:layout_above="@id/vo_text_widget"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/vo_tw_candidatebarHeight" />
 
-</RelativeLayout>
+    <FrameLayout 
+    android:id="@+id/fragment_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+    
+   
+    
+   </LinearLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TextWidget">
+        
+        <attr name="background" format="integer" />
+        <attr name="scrollbar" format="integer" />
+        <attr name="scrollbarMask" format="integer" />
+        <attr name="scrollbarBackground" format="integer" />
+        <attr name="scrollArrowLeft" format="integer" />
+        <attr name="scrollArrowRight" format="integer" />
+        <attr name="cursor" format="integer" />
+        <attr name="cursorHandle" format="integer" />
+        <attr name="insertHandle" format="integer" />
+        
+        <attr name="fontFamily" format="string" />
+        <attr name="textColor" format="color" />
+        <attr name="textSize" format="dimension" />
+        
+        <attr name="inkColor" format="color" />
+        <attr name="inkWidth" format="dimension" />
+        <attr name="inkCap" format="integer" />
+
+        <attr name="baselinePosition" format="dimension" />
+        <attr name="baselineThickness" format="dimension" />
+        <attr name="baselineColor" format="color" />
+        
+    </declare-styleable>    
+</resources>

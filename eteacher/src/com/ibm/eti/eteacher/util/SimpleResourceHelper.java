@@ -6,8 +6,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.util.Log;
 
 /** This class takes care of extracting handwriting resource files from the assets folder. */
@@ -32,9 +34,10 @@ public class SimpleResourceHelper
     
     for (int i=0; i<resources.length; i++) {
       File resourceFile = new File(cacheDir, resources[i]);
-      if (!resourceFile.exists()) {
-        copyResourceFromAssets(resources[i], resourceFile);
+      if (resourceFile.exists()) {
+    	  resourceFile.delete();
       }
+      copyResourceFromAssets(resources[i], resourceFile);
       paths[i] = resourceFile.getAbsolutePath();
     }
     
@@ -63,5 +66,57 @@ public class SimpleResourceHelper
     } catch (IOException e) {
       Log.e(TAG, "Error while extracting resource " + resource + " from assets");
     }
+  }
+  
+  public static boolean copyResourcesFromAssets(AssetManager am, final String subfolder, final String resourcePath, final String[] resources)
+  {
+    boolean done = true;
+    try 
+    {
+      // Be sure target folder exists
+      File resourceFolder = new File(resourcePath);
+      resourceFolder.mkdirs();
+    	
+	  for (final String filename: resources)
+	  {
+        // Files
+        String srcFilename = getPathFor(subfolder, filename);
+        String dstFilename = getPathFor(resourcePath, filename);
+        
+        // Reading source file.
+        InputStream is = am.open(srcFilename);
+        byte[] buffer = new byte[is.available()];
+        is.read(buffer);
+        
+        // Create destination file to copy into.
+        File dst = new File(dstFilename);
+        System.err.println("snow: " + srcFilename + " dst " + dstFilename + " exist: " + dst.exists());
+        if (!dst.exists())
+        {
+          dst.createNewFile();
+          FileOutputStream out = new FileOutputStream(dst);
+          out.write(buffer);
+          out.close();
+        }
+	  }
+    } 
+    catch (IOException e) 
+    {
+      done = false;
+      e.printStackTrace();
+    }
+	return done;
+  }
+  
+  private static String getPathFor(final String folder, final String filename)
+  {
+    String filepath = folder;
+    if (!filepath.endsWith(java.io.File.separator))
+      filepath += java.io.File.separator;
+    if (filename.startsWith(java.io.File.separator))
+      filepath += filename.substring(1);
+    else
+      filepath += filename;
+    return filepath;
   }
 }

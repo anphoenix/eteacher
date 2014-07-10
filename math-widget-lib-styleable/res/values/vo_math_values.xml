@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- Default configuration default values -->
+    
+        <!-- Text -->
+        <string name="vo_math_fontName">STIXGeneral.ttf</string>
+        <string name="vo_math_italicFontName"></string>
+        <color name="vo_math_textColor">#FF4B5775</color>
+        <color name="vo_math_transientColor">#FFAAAAAA</color>
+        
+        <!-- Ink -->
+        <color name="vo_math_inkColor">#FF4B5775</color>
+        <integer name="vo_math_inkThickness">10</integer>
+        
+        <!-- Write area -->
+        <color name="vo_math_backgroundColor">#FFFFFFFF</color>
+        <integer name="vo_math_writeHMargin">60</integer>
+        <integer name="vo_math_writeVMargin">30</integer>
+        
+        <!-- Baseline -->
+        <color name="vo_math_baselineColor">#FFAAAAAA</color>
+        <integer name="vo_math_baselineThickness">1</integer>
+        
+        <!-- Palm rejection -->
+        
+        <!-- Recognition timeout -->
+        <integer name="vo_math_recoTimeout">7000</integer>
+        
+        <!-- Solver -->
+        <integer name="vo_math_decimalsCount">3</integer>
+
+</resources>

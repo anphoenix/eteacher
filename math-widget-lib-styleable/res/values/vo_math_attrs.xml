@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MathWidget">
+        
+        <!-- Text -->
+        <attr name="fontName" format="reference|string" />
+        <attr name="italicFontName" format="reference|string" />
+        <attr name="mathTextColor" format="reference|color" />
+        <attr name="transientColor" format="reference|color" />
+        
+        <!-- Ink -->
+        <attr name="mathInkColor" format="reference|color" />
+        <attr name="inkThickness" format="reference|integer" />
+        
+        <!-- Write area -->
+        <attr name="backgroundColor" format="reference|color" />
+        <attr name="backgroundDrawable" format="reference" />
+        <attr name="writeHMargin" format="reference|integer" />
+        <attr name="writeVMargin" format="reference|integer" />
+        
+        <!-- Baseline -->
+        <attr name="mathBaselineColor" format="reference|color" />
+        <attr name="mathBaselineThickness" format="reference|integer" />
+        
+        <!-- Palm rejection -->
+        <attr name="palmRejectionEnabled" format="boolean" />
+        <attr name="palmRejectionHand">
+          <flag name="left" value="0x01" />
+          <flag name="right" value="0x02" />
+       </attr>
+        
+        <!-- Recognition timeout -->
+        <attr name="recoTimeout" format="reference|integer" />
+        
+        <!-- Solver -->
+        <attr name="decimalsCount" format="reference|integer" />
+        <attr name="angleUnit">
+          <flag name="degree" value="0x01" />
+          <flag name="radian" value="0x02" />
+       </attr>
+       <attr name="solverEnabled" format="boolean" />
+        
+    </declare-styleable>    
+</resources>

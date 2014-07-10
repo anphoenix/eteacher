@@ -25,6 +25,8 @@ import com.ibm.eti.eteacher.reco.EditionBehavior;
 import com.ibm.eti.eteacher.util.SampleQuestions;
 import com.ibm.eti.eteacher.util.SimpleResourceHelper;
 import com.ibm.eti.eteacher.view.CustomEditText;
+import com.visionobjects.math.MathWidgetApi;
+import com.visionobjects.math.MathWidgetApi.AngleUnit;
 import com.visionobjects.myscript.certificate.MyCertificate;
 import com.visionobjects.textwidget.TextWidget;
 import com.visionobjects.textwidget.TextWidgetApi;
@@ -38,30 +40,59 @@ TextWidgetApi.OnCursorHandleDragListener,
 TextWidgetApi.OnInsertHandleDragListener,
 TextWidgetApi.OnInsertHandleClickedListener,
 TextWidgetApi.OnGestureListener,
-TextWidgetApi.OnUserScrollListener
+TextWidgetApi.OnUserScrollListener,
+MathWidgetApi.OnConfigureListener,
+MathWidgetApi.OnRecognitionListener,
+MathWidgetApi.OnGestureListener, 
+MathWidgetApi.OnWritingListener,
+MathWidgetApi.OnTimeoutListener,
+MathWidgetApi.OnSolvingListener, 
+MathWidgetApi.OnUndoRedoListener
 {
   // load the StylusCore library when this class is loaded
   static {
 
     // you can either load the library by name
     // Android will search the default paths for a dynamic library with file name libStylusCore.so
-    System.loadLibrary("StylusCore");
+    System.loadLibrary("StylusCore2");
     
     // or you can load the library by specifying a full path
     // this is useful when you want to load a specific version of the StylusCore library from the filesystem
     //System.load("/data/data/com.visionobjects.textwidget.demos/lib/libStylusCore.so");
   }
 
-  private static final String TAG = "SampleActivity";
+  private static final String TAG = "TestActivity";
   
-  private CustomEditText            mEditText;
+  private CustomEditText mEditText;
   private TextView mLabelText;
-  private ToolbarController         mToolbarController;
-  private CandidateBarController    mCandidateBarController;
 
-  private TextWidget                mWidget;
+  private TextWidget mWidget = null;
+  private MathWidgetApi mMathWidget = null;
+  private boolean isMath = false;
   
-  private EditionBehavior           mEditionBehavior;
+	public boolean isMath() {
+		return isMath;
+	}
+
+	public void setMath(boolean isMath) {
+		this.isMath = isMath;
+	}
+
+	public TextWidget getmWidget() {
+		return mWidget;
+	}
+
+	public MathWidgetApi getmMathWidget() {
+		return mMathWidget;
+	}
+
+	public void setmMathWidget(MathWidgetApi mMathWidget) {
+		this.mMathWidget = mMathWidget;
+	}
+
+	public void setmWidget(TextWidget mWidget) {
+		this.mWidget = mWidget;
+	}
   
   public static int curQuestionIndex = 0;
   public static List<String> answers = new ArrayList<String>();
@@ -88,49 +119,21 @@ TextWidgetApi.OnUserScrollListener
     	mLabelText.setText(SampleQuestions.questions.get(0));
     }
     
-    View toolbarView = findViewById(R.id.vo_tw_toolbar);
-    mToolbarController = new ToolbarController(toolbarView);
-    
-    toolbarView.findViewById(R.id.vo_tw_nextButton).setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-        	Intent intent = new Intent();
-        	if (TestActivity.curQuestionIndex < SampleQuestions.questions.size() - 1){
-	        	TestActivity.answers.add(mEditText.getText().toString());
-	        	mLabelText.setText(SampleQuestions.questions.get(++TestActivity.curQuestionIndex));
-	        	mEditText.setText("");
-	        	mWidget.setText("");
-	        	return;
-        	}
-        	else{
-        		TestActivity.answers.add(mEditText.getText().toString());
-        		intent.setClass(v.getContext(), ResultDisplayActivity.class);
-        	}
-        	v.getContext().startActivity(intent);
-        	finish();
+    if (findViewById(R.id.fragment_container) != null) {
+    	
+        if (savedInstanceState != null) {
+            return;
         }
-      });
-    
-    mCandidateBarController = new CandidateBarController(findViewById(R.id.vo_tw_candidatebar));
-    
-    mWidget = (TextWidget) findViewById(R.id.vo_text_widget);    
-    mWidget.setOnConfigureListener(this);
-    mWidget.setOnRecognitionListener(this);
-    mWidget.setOnCursorHandleDragListener(this);
-    mWidget.setOnInsertHandleDragListener(this);
-    mWidget.setOnInsertHandleClickedListener(this);
-    mWidget.setOnGestureListener(this);
-    mWidget.setOnUserScrollListener(this);
-    
-    
-    // hovering functionality is disabled by default
-    mWidget.setHoverEnabled(true);
 
-    mEditionBehavior = new EditionBehavior(mWidget, mEditText, mCandidateBarController);
-    
-    configure();
+        TextRecognitionFragment firstFragment = new TextRecognitionFragment();
+        
+        firstFragment.setArguments(getIntent().getExtras());
+        
+        getFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, firstFragment).commit();
+    }
 
-    setTitle(getResources().getString(R.string.activity_name) + " " + com.visionobjects.textwidget.Build.VERSION.RELEASE);
+    setTitle(getResources().getString(R.string.activity_name));
   }
   
   @Override
@@ -140,56 +143,25 @@ TextWidgetApi.OnUserScrollListener
     
     // pipe current text of field to the widget
     final Editable editable = mEditText.getText();
-    if(editable != null)
-      mWidget.setText(editable.toString());
-    else
-      mWidget.setText("");
+    if(editable != null){
+    	if (mWidget != null){
+    		mWidget.setText(editable.toString());
+    	}
+    }
+    else{
+    	if (mWidget != null){
+    		mWidget.setText("");
+    	}
+    }
     // set insertion mode at the end of the text
-    mWidget.setInsertionMode(mEditText.getText().length());
-    // place the cursor at the end of the text
-    mEditText.setCursorIndex(mEditText.getText().length());
+    if (mWidget != null){
+	    mWidget.setInsertionMode(mEditText.getText().length());
+	    // place the cursor at the end of the text
+	    mEditText.setCursorIndex(mEditText.getText().length());
+    }
   }
   
-  // ----------------------------------------------------------------------
-  // Handwriting recognition configuration
-  
-  private void configure()
-  {
-    SimpleResourceHelper helper = new SimpleResourceHelper(this);
-
-    String[] resources = new String[] {
-    		"zh_CN/zh_CN_gb18030-ak-cur.lite.res",
-            "zh_CN/zh_CN_gb18030-lk-text.lite.res"
-//        "en_US/en_US-ak-cur.lite.res",
-//        "en_US/en_US-lk-text.lite.res"
-      };
-
-    String[] paths = helper.getResourcePaths(resources);
-      
-    String[] lexicon = new String[] {
-        // add your user dictionary here
-    };
-
-    long startTime = System.currentTimeMillis();
-    mWidget.configure("zh_CN", paths, lexicon, MyCertificate.getBytes());
-    long endTime = System.currentTimeMillis();
-    
-    Log.d(TAG, "configure() API processing time=" + (endTime - startTime) + "ms");
-    
-    // configure visual and behavior of the widget
-    mWidget.setAutoScrollEnabled(true);
-    mWidget.setAutoTypesetEnabled(true);
-    mWidget.setScrollbarResource(R.drawable.vo_tw_scrollbar_xml);
-    mWidget.setScrollArrowLeftResource(R.drawable.vo_tw_arrowleft_xml);
-    mWidget.setScrollArrowRightResource(R.drawable.vo_tw_arrowright_xml);
-    mWidget.setOnTextChangedListener(mEditionBehavior);
-    mWidget.setOnSelectionChangedListener(mEditionBehavior);
-
-    mCandidateBarController.setOnCandidateButtonClickedListener(mEditionBehavior);
-    mToolbarController.setOnSpaceButtonClickedListener(mEditionBehavior);
-    mToolbarController.setOnDeleteButtonClickedListener(mEditionBehavior);
-    mEditText.setOnCursorIndexChangedListener(mEditionBehavior);
-  }
+ 
 
   // ----------------------------------------------------------------------
   // Handwriting recognition engine configuration
@@ -428,6 +400,60 @@ TextWidgetApi.OnUserScrollListener
       }
     }
   }
+
+@Override
+public void onUndoRedoStateChanged() {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void onCurrentAngleUnitChanged(AngleUnit arg0) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void onUsingAngleUnitChanged(boolean arg0) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void onRecognitionTimeout() {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void onWritingBegin() {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void onWritingEnd() {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void onEraseGesture(boolean arg0) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void onConfigurationBegin() {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void onConfigurationEnd(boolean arg0) {
+	// TODO Auto-generated method stub
+	
+}
 
 
 }

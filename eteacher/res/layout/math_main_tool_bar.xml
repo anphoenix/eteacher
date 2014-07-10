@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+    
+    <Button
+        android:id="@+id/vo_math_clearButton"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:contentDescription="@null"
+        android:text="@string/toolbar_clear_label" />
+    
+    <ImageButton
+        android:id="@+id/vo_tw_textButton"
+        android:minWidth="@dimen/vo_tw_minButtonWidth"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:background="@drawable/vo_tw_btn_keyboard_key_xml"
+        android:src="@drawable/vo_tw_keyboard_text_xml"
+        android:contentDescription="@null"
+        />
+
+</LinearLayout>
