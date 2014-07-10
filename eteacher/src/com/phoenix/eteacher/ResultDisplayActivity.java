@@ -1,20 +1,12 @@
 package com.phoenix.eteacher;
 
-import java.util.List;
-
-import com.phoenix.eteacher.R;
-import com.phoenix.eteacher.util.SampleQuestions;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
+
+import com.phoenix.eteacher.util.SampleQuestions;
 
 public class ResultDisplayActivity extends Activity {
 
@@ -49,20 +41,23 @@ public class ResultDisplayActivity extends Activity {
 
 
 	private String getGrade() {
-		List<String> qs = SampleQuestions.questions;
+		
 		StringBuilder builder = new StringBuilder();
 		int rightCount = 0;
-		for(int i = 0; i < qs.size(); i++){
-			if (SampleQuestions.isCorrect(qs.get(i), TestActivity.answers.get(i))){
+		for(int i = 0; i < SampleQuestions.size(); i++){
+			if (SampleQuestions.isCorrect(i, TestActivity.answers.get(i))){
 				rightCount++;
 			} else {
-				builder.append("第" + (i + 1) + "问题答错了，正确答案是："+SampleQuestions.getCorrectAnswer(qs.get(i)) +" ,输入答案是：" + TestActivity.answers.get(i) +"\n");
+				builder.append("第" + (i + 1) + "题答错了,");
+				builder.append("正确答案是："+SampleQuestions.getCorrectAnswer(i));
+				if(TestActivity.answers.get(i).length() > 0)
+					builder.append(" ,输入答案是：" + TestActivity.answers.get(i) +"\n");
 			}
 		}
-		String res = "一共" + qs.size() + "题，你答对了" + rightCount + "题\n\n";
+		builder.insert(0, "一共" + SampleQuestions.size() + "题，你答对了" + rightCount + "题\n\n");
 		
-		builder.append("\n\n 重新答题");
-		return res + builder.toString();
+		builder.append("\n\n 重新答题\n");
+		return builder.toString();
 	}
 	
 	@Override

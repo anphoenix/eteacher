@@ -7,21 +7,23 @@
     <ImageButton
         android:id="@+id/vo_math_clearButton"
         android:minWidth="@dimen/vo_tw_minLargeButtonWidth"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@drawable/vo_tw_btn_keyboard_key_xml"
         android:src="@drawable/vo_tw_keyboard_math_clear_xml"
         android:contentDescription="@null"
+        android:layout_weight="1"
         />
     
     <ImageButton
         android:id="@+id/vo_tw_textButton"
         android:minWidth="@dimen/vo_tw_minLargeButtonWidth"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@drawable/vo_tw_btn_keyboard_key_xml"
         android:src="@drawable/vo_tw_keyboard_text_xml"
         android:contentDescription="@null"
+        android:layout_weight="1"
         />
     
     <!--  <Button

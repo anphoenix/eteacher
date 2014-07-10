@@ -133,13 +133,14 @@ MathWidgetApi.OnUndoRedoListener
     mLabelText = (TextView) findViewById(R.id.labelTextField);
     
     Intent intent = getIntent();
-    if(intent != null && intent.getExtras() != null){
-    	int idx = intent.getExtras().getInt("questionIdx");
-    	mLabelText.setText(SampleQuestions.questions.get(idx));
-    }
-    else{
-    	mLabelText.setText(SampleQuestions.questions.get(0));
-    }
+    
+    int idx = 0;
+    if(intent != null && intent.getExtras() != null)
+    	idx = intent.getExtras().getInt("questionIdx");
+    
+    
+    mLabelText.setText(SampleQuestions.getReadableQuestion(idx));
+    
     
     if (findViewById(R.id.fragment_container) != null) {
     	

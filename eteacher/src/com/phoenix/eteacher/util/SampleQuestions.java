@@ -3,21 +3,17 @@ package com.phoenix.eteacher.util;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
 
 public class SampleQuestions {
-
-	public static Map<String, String> answerMap = new HashMap<String, String>();
-	public static List<String> questions = new ArrayList<String>();
+	public static Map<Integer, Question> questions = new HashMap<Integer, Question>();
 	private static boolean isLoaded = false;
 	
-	public static boolean isCorrect(String que, String ans){
-		String rightAnswer = answerMap.get(que);
+	public static boolean isCorrect(Integer index, String ans){
+		String rightAnswer = questions.get(index).answer;
 		if (rightAnswer != null && rightAnswer.equalsIgnoreCase(ans)){
 			return true;
 		}
@@ -26,9 +22,23 @@ public class SampleQuestions {
 		}
 	}
 	
-	public static String getCorrectAnswer(String que){
-		return answerMap.get(que);
+	public static int size(){
+		return questions.size();
 	}
+	
+	public static String getCorrectAnswer(Integer index){
+		return questions.get(index).answer;
+	}
+	
+	public static Question getQuestion(Integer index){
+		return questions.get(index);
+	}
+	
+	public static String getReadableQuestion(Integer index){
+		return questions.get(index).getReadableQuestion(index);
+	}
+	
+	
 
 	public static void load(Context context) {
 		if (!isLoaded){
@@ -39,10 +49,9 @@ public class SampleQuestions {
 				try{
 					reader = new BufferedReader(new FileReader(path));
 					String line = reader.readLine();
+					int count = 0;
 					while(line != null){
-						String[] ss = line.split("=");
-						questions.add(ss[0]);
-						answerMap.put(ss[0], ss[1]);
+						questions.put(count++, Question.createQuestion(line));
 						line = reader.readLine();
 					}
 				}
