@@ -44,11 +44,9 @@ public class TextRecognitionFragment extends Fragment {
 	        public void onClick(View v) {
 	        	Intent intent = new Intent();
 	        	if (TestActivity.curQuestionIndex < SampleQuestions.questions.size() - 1){
-		        	TestActivity.answers.add(mEditText.getText().toString());
+		        	TestActivity.setAnswer(TestActivity.curQuestionIndex, mEditText.getText().toString().trim());
 		        	mLabelText.setText(SampleQuestions.questions.get(++TestActivity.curQuestionIndex));
-		        	String answer = "";
-		        	if(TestActivity.curQuestionIndex < TestActivity.answers.size())
-		        		answer = TestActivity.answers.get(TestActivity.curQuestionIndex);
+		        	String answer = TestActivity.getAnswer(TestActivity.curQuestionIndex);
 		        	mEditText.setText(answer);
 		        	mWidget.setText(answer);
 		        	return;
@@ -67,8 +65,7 @@ public class TextRecognitionFragment extends Fragment {
 	        public void onClick(View v) {
 	        	if (TestActivity.curQuestionIndex > 0){
 	        		mLabelText.setText(SampleQuestions.questions.get(--TestActivity.curQuestionIndex));
-		        	String answer = TestActivity.answers.get(TestActivity.curQuestionIndex);
-		        	if(answer == null) answer = "";
+		        	String answer = TestActivity.getAnswer(TestActivity.curQuestionIndex);
 		        	mEditText.setText(answer);
 		        	mWidget.setText(answer);
 		        	return;

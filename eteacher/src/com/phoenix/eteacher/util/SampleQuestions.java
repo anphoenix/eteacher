@@ -28,7 +28,7 @@ public class SampleQuestions {
 	
 	public static boolean isCorrect(String que, String ans){
 		String rightAnswer = answerMap.get(que);
-		if (rightAnswer != null && rightAnswer.equals(ans)){
+		if (rightAnswer != null && rightAnswer.equalsIgnoreCase(ans)){
 			return true;
 		}
 		else{

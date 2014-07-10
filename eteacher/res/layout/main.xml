@@ -2,7 +2,8 @@
 
    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
       android:orientation="vertical" android:layout_width="fill_parent"
-    	android:layout_height="fill_parent">
+    	android:layout_height="fill_parent"  
+    	android:background="@color/vo_tw_backgroundColor">
     	
     <LinearLayout 
       android:orientation="vertical" android:layout_width="fill_parent"
@@ -13,22 +14,26 @@
         android:text="@string/vo_tw_defaultText"
         android:textIsSelectable="true"
         android:inputType="textMultiLine"
-        android:lines="1"
         android:gravity="top|left"
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_weight="1" 
+        android:textSize="@dimen/vo_tw_midtextSize"
+        android:textColor="@color/black"
+        />
     
     <com.phoenix.eteacher.view.CustomEditText
         android:id="@+id/textField"
         android:text="@string/vo_tw_defaultText"
         android:textIsSelectable="true"
         android:inputType="textMultiLine"
-        android:lines="1"
         android:gravity="top|left"
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content" 
-        android:layout_weight="1" />
+        android:layout_weight="1" 
+        android:textSize="@dimen/vo_tw_midtextSize"
+        android:textColor="@color/grey"
+        />
     
     </LinearLayout>
 

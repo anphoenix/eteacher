@@ -98,6 +98,24 @@ MathWidgetApi.OnUndoRedoListener
   
   public static int curQuestionIndex = 0;
   public static List<String> answers = new ArrayList<String>();
+  
+  public static String getAnswer(int index){
+	  if(index < answers.size())	return answers.get(index);
+	  else return "";
+  }
+  
+  public static void setAnswer(int index, String answer){
+	  if(index < answers.size()){
+		  answers.set(index, answer);
+	  } else {
+		  answers.add(answer);
+	  }
+  }
+  
+  public static void reset(){
+	  TestActivity.answers.clear();
+	  TestActivity.curQuestionIndex = 0;
+  }
 
   @TargetApi(11)
   @Override

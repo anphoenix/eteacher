@@ -27,10 +27,24 @@ public class ResultDisplayActivity extends Activity {
         setContentView(R.layout.result);
         setTitle(R.string.result_title);
 
-        mResultText = (TextView) findViewById(R.id.resultTextField);
-        
+        mResultText = (TextView) findViewById(R.id.resultTextField);       
         
         mResultText.setText(getGrade());
+        
+        connectEvents();
+    }
+    
+    private void connectEvents(){
+    	findViewById(R.id.vo_tw_redoButton).setOnClickListener(new View.OnClickListener() {
+	        @Override
+	        public void onClick(View v) {
+	        	Intent intent = new Intent();
+	        		TestActivity.reset();
+	        		intent.setClass(v.getContext(), TestActivity.class);
+	        		v.getContext().startActivity(intent);
+		        	finish();
+	        	}
+	      });
     }
 
 
@@ -45,8 +59,9 @@ public class ResultDisplayActivity extends Activity {
 				builder.append("第" + (i + 1) + "问题答错了，正确答案是："+SampleQuestions.getCorrectAnswer(qs.get(i)) +" ,输入答案是：" + TestActivity.answers.get(i) +"\n");
 			}
 		}
-		String res = "一共" + qs.size() + "�?�题，你答对了" + rightCount + "�?�题\n";
+		String res = "一共" + qs.size() + "题，你答对了" + rightCount + "题\n\n";
 		
+		builder.append("\n\n 重新答题");
 		return res + builder.toString();
 	}
 	

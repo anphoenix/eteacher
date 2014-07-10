@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
-      android:orientation="horizontal" android:layout_width="fill_parent"
+      android:orientation="vertical" android:layout_width="fill_parent"
     	android:layout_height="wrap_content">
     <!-- target field -->
     <android.widget.TextView
@@ -9,10 +9,22 @@
         android:text="@string/vo_tw_defaultText"
         android:textIsSelectable="true"
         android:inputType="textMultiLine"
-        android:lines="10"
         android:gravity="top|left"
         android:layout_width="fill_parent" 
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" 
+        android:textSize="@dimen/vo_tw_smalltextSize"
+        />
+    
+    <ImageButton
+        android:id="@+id/vo_tw_redoButton"
+        android:minWidth="@dimen/vo_tw_minLargeButtonWidth"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:background="@drawable/vo_tw_btn_keyboard_key_xml"
+        android:src="@drawable/vo_tw_keyboard_redo_xml"
+        android:contentDescription="@null"
+        android:layout_gravity="center_horizontal"
+        />
     
     
     </LinearLayout>

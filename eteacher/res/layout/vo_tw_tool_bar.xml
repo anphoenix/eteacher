@@ -17,9 +17,8 @@
     <ImageButton
         android:id="@+id/vo_tw_spaceButton"
         android:minWidth="@dimen/vo_tw_minButtonWidth"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:layout_weight="1"
         android:background="@drawable/vo_tw_btn_keyboard_key_xml"
         android:src="@drawable/vo_tw_keyboard_space_xml"
         android:contentDescription="@null"

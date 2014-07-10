@@ -3,6 +3,12 @@
     <dimen name="vo_tw_widgetHeight">200dp</dimen>
     <dimen name="vo_tw_toolbarHeight">60dp</dimen>
     <dimen name="vo_tw_candidatebarHeight">60dp</dimen>
-    <dimen name="vo_tw_minButtonWidth">60dp</dimen>
-    <color name="vo_tw_backgroundColor">#272727</color>
+    <dimen name="vo_tw_minButtonWidth">65dp</dimen>
+    <dimen name="vo_tw_minLargeButtonWidth">167dp</dimen>
+    <dimen name="vo_tw_midtextSize">22sp</dimen>
+    <dimen name="vo_tw_largetextSize">40sp</dimen>
+    <dimen name="vo_tw_smalltextSize">15sp</dimen>
+    <color name="vo_tw_backgroundColor">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="grey">#525252</color>  
 </resources>
