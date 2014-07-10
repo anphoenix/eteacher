@@ -2,6 +2,7 @@ package com.phoenix.eteacher;
 
 import com.phoenix.eteacher.R;
 import com.phoenix.eteacher.util.SimpleResourceHelper;
+import com.phoenix.eteacher.view.CustomEditText;
 import com.visionobjects.math.MathWidgetApi;
 import com.visionobjects.myscript.certificate.MyCertificate;
 
@@ -17,6 +18,7 @@ public class MathRecognitionFragment extends Fragment{
 	
 	private TestActivity  activity = null;
 	private MathWidgetApi mWidget;
+	private CustomEditText mEditText = null;
 	
 	@Override
 	  public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,6 +32,8 @@ public class MathRecognitionFragment extends Fragment{
 	    mWidget.setOnGestureListener(this.activity);
 	    mWidget.setOnWritingListener(this.activity);
 	    mWidget.setOnTimeoutListener(this.activity);
+	    mWidget.setSolverEnabled(false);
+
 	    
 	    // Connect clear button
 	    View clearButton = view.findViewById(R.id.vo_math_clearButton);
@@ -54,11 +58,15 @@ public class MathRecognitionFragment extends Fragment{
 	        public void onClick(final View view)
 	        {
 	        	TextRecognitionFragment textFragment = new TextRecognitionFragment();
+	        	Bundle args = new Bundle();
+	        	args.putBoolean("fromMath", true);
+	        	args.putString("currentInput", mEditText.getText().toString());
+				textFragment.setArguments(args);
 	        	FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
 	        	// Replace whatever is in the fragment_container view with this fragment,
 	        	// and add the transaction to the back stack so the user can navigate back
-	        	transaction.replace(R.id.fragment_container, textFragment);
+	        	transaction.replace(R.id.fragment_container, textFragment, "textFragment");
 //	        	transaction.addToBackStack(null);
 
 	        	// Commit the transaction
@@ -66,6 +74,8 @@ public class MathRecognitionFragment extends Fragment{
 	        }
 	      });
 	    }
+	    
+	    mEditText = (CustomEditText) this.activity.findViewById(R.id.textField);
 	    
 	    // Configure equation recognition engine
 	    configure();
@@ -76,6 +86,12 @@ public class MathRecognitionFragment extends Fragment{
 	  public void onAttach(Activity activity) {
 	    super.onAttach(activity);
 	    this.activity = (TestActivity)activity;
+	  }
+	 
+	 @Override
+	  public void onDetach() {
+	    super.onDetach();
+	    mWidget.release(this.activity);
 	  }
 	 
 	 private void configure()
@@ -90,8 +106,8 @@ public class MathRecognitionFragment extends Fragment{
 	    // Prepare resources
 	    final String subfolder = "equation";
 	    String resourcePath = new String(this.activity.getFilesDir().getPath() + java.io.File.separator + subfolder);
-	    boolean res = SimpleResourceHelper.copyResourcesFromAssets(this.activity.getAssets(), subfolder /* from */, resourcePath /* to */, resources /* resource names */);
-		System.err.println("academic result: ******************** " + res + " path: " + resourcePath + " cert: ");
+	    SimpleResourceHelper.copyResourcesFromAssets(this.activity.getAssets(), subfolder /* from */, resourcePath /* to */, resources /* resource names */);
+		
 	    // Configure math widget
 	    mWidget.setResourcesPath(resourcePath);
 	    mWidget.configure(this.activity, resources, MyCertificate.getBytes());

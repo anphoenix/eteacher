@@ -90,10 +90,12 @@ MathWidgetApi.OnUndoRedoListener
 
 	public void setmMathWidget(MathWidgetApi mMathWidget) {
 		this.mMathWidget = mMathWidget;
+		this.mWidget = null;
 	}
 
 	public void setmWidget(TextWidget mWidget) {
 		this.mWidget = mWidget;
+		this.mMathWidget = null;
 	}
   
   public static int curQuestionIndex = 0;
@@ -222,6 +224,10 @@ MathWidgetApi.OnUndoRedoListener
   public void onRecognitionEnd()
   {
     Log.d(TAG, "Handwriting recognition end");
+    if (mMathWidget != null){
+    	mEditText.append(mMathWidget.getResultAsText());
+    	mEditText.append("\n");
+    }
   }
   
   // ----------------------------------------------------------------------

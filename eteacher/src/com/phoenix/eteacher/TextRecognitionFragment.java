@@ -124,6 +124,12 @@ public class TextRecognitionFragment extends Fragment {
 	    this.activity = (TestActivity)activity;
 	  }
 	  
+	  @Override
+	  public void onDetach() {
+	    super.onDetach();
+	    mWidget.releaseEngine();
+	  }
+	  
 	  // ----------------------------------------------------------------------
 	  // Handwriting recognition configuration
 	  

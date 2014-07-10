@@ -90,7 +90,7 @@ public class SimpleResourceHelper
         
         // Create destination file to copy into.
         File dst = new File(dstFilename);
-        System.err.println("snow: " + srcFilename + " dst " + dstFilename + " exist: " + dst.exists());
+
         if (!dst.exists())
         {
           dst.createNewFile();

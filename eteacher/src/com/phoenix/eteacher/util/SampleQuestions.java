@@ -16,16 +16,6 @@ public class SampleQuestions {
 	public static List<String> questions = new ArrayList<String>();
 	private static boolean isLoaded = false;
 	
-//	static{
-//		questions.add("举头望明月");
-//		questions.add("春眠�?觉晓");
-//		questions.add("飞�?直下三�?�尺");
-//		
-//		answerMap.put("举头望明月", "低头�?故乡");
-//		answerMap.put("春眠�?觉晓", "处处闻啼鸟");
-//		answerMap.put("飞�?直下三�?�尺", "疑是银河�?��?天");
-//	}
-	
 	public static boolean isCorrect(String que, String ans){
 		String rightAnswer = answerMap.get(que);
 		if (rightAnswer != null && rightAnswer.equalsIgnoreCase(ans)){
