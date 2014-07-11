@@ -52,6 +52,10 @@ public class ResultDisplayActivity extends Activity {
 				builder.append("正确答案是："+SampleQuestions.getCorrectAnswer(i));
 				if(TestActivity.answers.get(i).length() > 0)
 					builder.append(" ,输入答案是：" + TestActivity.answers.get(i) +"\n");
+				else
+				{
+					builder.append("\n");
+				}
 			}
 		}
 		builder.insert(0, "一共" + SampleQuestions.size() + "题，你答对了" + rightCount + "题\n\n");
