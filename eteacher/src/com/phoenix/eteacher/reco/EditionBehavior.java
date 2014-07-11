@@ -1,14 +1,11 @@
 package com.phoenix.eteacher.reco;
 
-import com.phoenix.eteacher.TestActivity;
 import com.phoenix.eteacher.controller.CandidateBarController;
 import com.phoenix.eteacher.controller.ToolbarController;
 import com.phoenix.eteacher.view.CustomEditText;
 import com.visionobjects.textwidget.TextWidget;
 import com.visionobjects.textwidget.TextWidgetApi;
 
-import android.app.Fragment;
-import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
 
@@ -129,28 +126,7 @@ implements
     
     mEditText.setOnCursorIndexChangedListener(null);
     
-		if (text.length() > 0) {
-			TestActivity activity = (TestActivity) mWidget.getContext();
-			Fragment fragment = activity.getFragmentManager().findFragmentByTag("textFragment");
-
-			if (text.length() > 0 && fragment != null) {
-				Bundle args = fragment.getArguments();
-				System.err.println("fromMath: ***************** "
-						+ args.getBoolean("fromMath") + " fromMath ");
-				if (args.getBoolean("fromMath")) {
-					mEditText.setTextKeepState(args.getString("currentInput")
-							+ text);
-					// args.putBoolean("fromMath", false);
-				} else {
-					mEditText.setTextKeepState(text);
-				}
-			} else {
-				mEditText.setTextKeepState(text);
-			}
-		}
-//    if (text.length() > 0){
-//    	mEditText.setTextKeepState(text);
-//    }
+    mEditText.setTextKeepState(text);
 
     mEditText.setOnCursorIndexChangedListener(this);
     

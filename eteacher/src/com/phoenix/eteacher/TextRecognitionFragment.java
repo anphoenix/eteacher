@@ -37,6 +37,7 @@ public class TextRecognitionFragment extends Fragment {
 	    ToolbarController mToolbarController = new ToolbarController(toolbarView);
 	    
 	    final CustomEditText mEditText = (CustomEditText) activity.findViewById(R.id.textField);
+	    
 	    final TextView mLabelText = (TextView) activity.findViewById(R.id.labelTextField);
 	    
 	    toolbarView.findViewById(R.id.vo_tw_nextButton).setOnClickListener(new View.OnClickListener() {
@@ -113,13 +114,23 @@ public class TextRecognitionFragment extends Fragment {
 	    
 	    configure(mEditionBehavior, mCandidateBarController, mToolbarController, mEditText);
 	    
-	    
+	    setEditText(mEditText);
 	    
 	    return view;
 	  }
 	  
 
-	  @Override
+	  private void setEditText(CustomEditText mEditText) {
+		Bundle args = this.getArguments();
+		if (args != null && args.getBoolean("fromMath")){
+			String curInput = args.getString("currentInput");
+			mEditText.setTextKeepState(curInput);
+			mWidget.setText(curInput);
+		}
+	  }
+
+
+	@Override
 	  public void onAttach(Activity activity) {
 	    super.onAttach(activity);
 	    this.activity = (TestActivity)activity;
@@ -129,6 +140,7 @@ public class TextRecognitionFragment extends Fragment {
 	  public void onDetach() {
 	    super.onDetach();
 	    mWidget.releaseEngine();
+	    mWidget.removeAllViews();
 	  }
 	  
 	  // ----------------------------------------------------------------------

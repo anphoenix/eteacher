@@ -283,7 +283,6 @@ public class TestActivity extends Activity implements
 		Log.d(TAG, "Handwriting recognition end");
 		if (mMathWidget != null) {
 			mEditText.append(mMathWidget.getResultAsText());
-			mEditText.append("\n");
 		}
 	}
 
