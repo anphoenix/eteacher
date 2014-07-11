@@ -3,8 +3,8 @@
     <dimen name="vo_tw_widgetHeight">200dp</dimen>
     <dimen name="vo_tw_toolbarHeight">60dp</dimen>
     <dimen name="vo_tw_candidatebarHeight">60dp</dimen>
-    <dimen name="vo_tw_minButtonWidth">65dp</dimen>
-    <dimen name="vo_tw_minLargeButtonWidth">167dp</dimen>
+    <dimen name="vo_tw_minButtonWidth">50dp</dimen>
+    <dimen name="vo_tw_minLargeButtonWidth">100dp</dimen>
     <dimen name="vo_tw_midtextSize">18sp</dimen>
     <dimen name="vo_tw_largetextSize">30sp</dimen>
     <dimen name="vo_tw_smalltextSize">12sp</dimen>

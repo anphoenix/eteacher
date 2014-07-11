@@ -75,6 +75,14 @@ public class MathRecognitionFragment extends Fragment{
 	      });
 	    }
 	    
+	    view.findViewById(R.id.vo_math_enterButton).setOnClickListener(new View.OnClickListener() {
+	        @Override
+	        public void onClick(View v) {
+	        	mEditText.append("\n");
+	        	mWidget.clear(true /* allow undo */);
+	        }
+	      });
+	    
 	    mEditText = (CustomEditText) this.activity.findViewById(R.id.textField);
 	    
 	    // Configure equation recognition engine

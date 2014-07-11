@@ -170,7 +170,6 @@ public class TestActivity extends Activity implements
 				if (scroll == null || mEditText == null) {
 					return;
 				}
-				// 内层高度超过外层
 				int offset = mEditText.getMeasuredHeight()
 								- scroll.getMeasuredHeight() + 2;
 				if (offset < 0) {
@@ -195,29 +194,6 @@ public class TestActivity extends Activity implements
 
 		});
 	}
-
-	// public static void scroll2Bottom(final ScrollView scroll, final View
-	// inner) {
-	// Handler handler = new Handler();
-	// handler.post(new Runnable() {
-	//
-	// @Override
-	// public void run() {
-	// // TODO Auto-generated method stub
-	// if (scroll == null || inner == null) {
-	// return;
-	// }
-	// // 内层高度超过外层
-	// int offset = inner.getMeasuredHeight()
-	// - scroll.getMeasuredHeight();
-	// if (offset < 0) {
-	// System.out.println("定位...");
-	// offset = 0;
-	// }
-	// scroll.scrollTo(0, offset);
-	// }
-	// });
-	// }
 
 	@Override
 	protected void onResume() {

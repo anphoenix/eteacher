@@ -14,6 +14,7 @@ public class SampleQuestions {
 	
 	public static boolean isCorrect(Integer index, String ans){
 		String rightAnswer = questions.get(index).answer;
+		ans = ans.replaceAll("\\s*", "");
 		if (rightAnswer != null && rightAnswer.equalsIgnoreCase(ans)){
 			return true;
 		}

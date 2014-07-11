@@ -78,6 +78,14 @@ public class TextRecognitionFragment extends Fragment {
 	        }
 	      });
 	    
+	    toolbarView.findViewById(R.id.vo_tw_enterButton).setOnClickListener(new View.OnClickListener() {
+	        @Override
+	        public void onClick(View v) {
+//	        	mEditText.append("\n");
+	        	mWidget.setText(mEditText.getText().toString() + "\n");
+	        }
+	      });
+	    
 	    toolbarView.findViewById(R.id.vo_tw_mathButton).setOnClickListener(new View.OnClickListener() {
 	        @Override
 	        public void onClick(View v) {
@@ -93,6 +101,8 @@ public class TextRecognitionFragment extends Fragment {
 	        	transaction.commit();
 	        }
 	      });
+	    
+	    
 	    
 	    CandidateBarController mCandidateBarController = new CandidateBarController(view.findViewById(R.id.vo_tw_candidatebar));
 	    
