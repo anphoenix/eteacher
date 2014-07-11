@@ -43,7 +43,6 @@ public class TextRecognitionFragment extends Fragment {
 	    toolbarView.findViewById(R.id.vo_tw_nextButton).setOnClickListener(new View.OnClickListener() {
 	        @Override
 	        public void onClick(View v) {
-	        	Intent intent = new Intent();
 	        	if (TestActivity.curQuestionIndex < SampleQuestions.questions.size() - 1){
 		        	TestActivity.setAnswer(TestActivity.curQuestionIndex, mEditText.getText().toString().trim());
 		        	mLabelText.setText(SampleQuestions.getReadableQuestion(++TestActivity.curQuestionIndex));
@@ -53,6 +52,7 @@ public class TextRecognitionFragment extends Fragment {
 		        	return;
 	        	}
 	        	else{
+	        		Intent intent = new Intent();
 	        		TestActivity.answers.add(mEditText.getText().toString());
 	        		intent.setClass(v.getContext(), ResultDisplayActivity.class);
 	        		v.getContext().startActivity(intent);
