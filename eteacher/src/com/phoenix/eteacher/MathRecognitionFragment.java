@@ -1,6 +1,7 @@
 package com.phoenix.eteacher;
 
 import com.phoenix.eteacher.R;
+import com.phoenix.eteacher.util.SampleQuestions;
 import com.phoenix.eteacher.util.SimpleResourceHelper;
 import com.phoenix.eteacher.view.CustomEditText;
 import com.visionobjects.math.MathWidgetApi;
@@ -9,16 +10,19 @@ import com.visionobjects.myscript.certificate.MyCertificate;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class MathRecognitionFragment extends Fragment{
 	
 	private TestActivity  activity = null;
 	private MathWidgetApi mWidget;
 	private CustomEditText mEditText = null;
+	private TextView mLabelText;
 	
 	@Override
 	  public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,6 +38,7 @@ public class MathRecognitionFragment extends Fragment{
 	    mWidget.setOnTimeoutListener(this.activity);
 	    mWidget.setSolverEnabled(false);
 
+	    mLabelText  = (TextView) activity.findViewById(R.id.labelTextField);
 	    
 	    // Connect clear button
 	    View clearButton = view.findViewById(R.id.vo_math_clearButton);
@@ -82,6 +87,45 @@ public class MathRecognitionFragment extends Fragment{
 	        	mWidget.clear(true /* allow undo */);
 	        }
 	      });
+	    
+	    view.findViewById(R.id.vo_tw_mathnextButton).setOnClickListener(new View.OnClickListener() {
+	        @Override
+	        public void onClick(View v) {
+	        	if (TestActivity.curQuestionIndex < SampleQuestions.questions.size() - 1){
+		        	TestActivity.setAnswer(TestActivity.curQuestionIndex, mEditText.getText().toString().trim());
+		        	mLabelText.setText(SampleQuestions.getReadableQuestion(++TestActivity.curQuestionIndex));
+		        	String answer = TestActivity.getAnswer(TestActivity.curQuestionIndex);
+		        	mEditText.setText(answer);
+		        	mWidget.clear(true /* allow undo */);
+		        	return;
+	        	}
+	        	else{
+	        		Intent intent = new Intent();
+	        		TestActivity.answers.add(mEditText.getText().toString());
+	        		intent.setClass(v.getContext(), ResultDisplayActivity.class);
+	        		v.getContext().startActivity(intent);
+		        	activity.finish();
+	        	}
+	        }
+	      });
+	    
+	    view.findViewById(R.id.vo_tw_mathprevButton).setOnClickListener(new View.OnClickListener() {
+	        @Override
+	        public void onClick(View v) {
+	        	if (TestActivity.curQuestionIndex > 0){
+	        		TestActivity.setAnswer(TestActivity.curQuestionIndex, mEditText.getText().toString().trim());
+	        		mLabelText.setText(SampleQuestions.getReadableQuestion(--TestActivity.curQuestionIndex));
+		        	String answer = TestActivity.getAnswer(TestActivity.curQuestionIndex);
+		        	mEditText.setText(answer);
+		        	mWidget.clear(true);
+		        	return;
+	        	}
+	        	else{
+	        		//TODO: should give a alert
+	        	}
+	        }
+	      });
+	    
 	    
 	    mEditText = (CustomEditText) this.activity.findViewById(R.id.textField);
 	    

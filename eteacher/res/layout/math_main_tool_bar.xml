@@ -5,6 +5,17 @@
     android:orientation="horizontal" >
     
     <ImageButton
+        android:id="@+id/vo_tw_mathprevButton"
+        android:minWidth="@dimen/vo_tw_minButtonWidth"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/vo_tw_btn_keyboard_key_xml"
+        android:src="@drawable/vo_tw_keyboard_prev_xml"
+        android:contentDescription="@null"
+        android:layout_weight="1"
+        />
+    
+    <ImageButton
         android:id="@+id/vo_math_enterButton"
         android:minWidth="@dimen/vo_tw_minLargeButtonWidth"
         android:layout_width="fill_parent"
@@ -38,6 +49,16 @@
         android:layout_weight="1"
         />
     
+      <ImageButton
+        android:id="@+id/vo_tw_mathnextButton"
+        android:minWidth="@dimen/vo_tw_minButtonWidth"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/vo_tw_btn_keyboard_key_xml"
+        android:src="@drawable/vo_tw_keyboard_next_xml"
+        android:contentDescription="@null"
+        android:layout_weight="1"
+        />
      
     
     <!--  <Button
