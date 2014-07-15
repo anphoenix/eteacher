@@ -29,23 +29,49 @@ public class SampleQuestions {
 	
 	public static boolean isCorrectApplication(Integer index, String ans){
 		String rightAnswer = questions.get(index).answer;
+		String[] rightAnswerArr = rightAnswer.split("\\|");
 		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|\\d+");
-		Matcher rightAns = p.matcher(rightAnswer);
+		Matcher rightAns = p.matcher(rightAnswerArr[rightAnswerArr.length - 1]);
 		String[] answAll = ans.split("\n");
 		String myLastLine = answAll[answAll.length - 1];
-		myLastLine = myLastLine.replaceAll("\\s*", "");
+//		myLastLine = myLastLine.replaceAll("\\s*", "");
 		Matcher myAns = p.matcher(myLastLine);
 		ArrayList<String> myAnsList = appendResToStr(myAns);
 		ArrayList<String> rightAnsList = appendResToStr(rightAns);
-		return myAnsList.containsAll(rightAnsList);
+		return myAnsList.containsAll(rightAnsList) && containsKeypoint(ans, getKeyPoints(rightAnswerArr));
 	}
 	
+	private static String[] getKeyPoints(String[] rightAnswerArr) {
+		String[] kp = new String[rightAnswerArr.length-1];
+		System.arraycopy(rightAnswerArr, 0, kp, 0, rightAnswerArr.length-1);
+		return kp;
+	}
+
+	private static boolean containsKeypoint(String ans, String[] keyp) {
+		//remove all white spaces except the new line feed
+		String replaced = ans.replaceAll("\n", "@").replaceAll("\\s*", "").replaceAll("@", "\n");
+		for(String kp : keyp){
+			if(replaced.contains(kp)){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public static int size(){
 		return questions.size();
 	}
 	
 	public static String getCorrectAnswer(Integer index){
-		return questions.get(index).answer;
+		Question q = questions.get(index);
+		String ans = q.answer;
+		if(q.type == Question.TYPE_APPLITION){
+			String[] ss = ans.split("\\|");
+			return ss[ss.length - 1];
+		}
+		else{
+			return ans;
+		}
 	}
 	
 	public static Question getQuestion(Integer index){

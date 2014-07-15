@@ -59,7 +59,7 @@ public class Question{
 		String[] ss = line.split("#");
 		Integer type = Integer.parseInt(ss[0]);
 		Integer ID = Integer.parseInt(ss[1]);
-		String[] ques = ss[2].split("&");
+		String[] ques = ss[2].split("@");
 		String question = ques[0];
 		if(type == Question.TYPE_CHOICE){
 			StringBuilder builder = new StringBuilder();
