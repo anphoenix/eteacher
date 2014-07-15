@@ -126,6 +126,20 @@ public class MathRecognitionFragment extends Fragment{
 	        }
 	      });
 	    
+	    view.findViewById(R.id.vo_tw_mathspaceButton).setOnClickListener(new View.OnClickListener() {
+	        @Override
+	        public void onClick(View v) {
+	        	mEditText.append(" ");
+	        }
+	    });
+	    
+	    view.findViewById(R.id.vo_tw_mathdeleteButton).setOnClickListener(new View.OnClickListener() {
+	        @Override
+	        public void onClick(View v) {
+	        	String oldStr = mEditText.getText().toString();
+	        	mEditText.setText(oldStr.substring(0, oldStr.length() - 1));
+	        }
+	    });
 	    
 	    mEditText = (CustomEditText) this.activity.findViewById(R.id.textField);
 	    
