@@ -446,6 +446,12 @@ public class TestActivity extends Activity implements
 			}
 		}
 	}
+	
+	@Override
+	public void onBackPressed() {
+		this.reset();
+		super.onBackPressed();
+	}
 
 	@Override
 	public void onUndoRedoStateChanged() {
