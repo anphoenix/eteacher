@@ -29,19 +29,15 @@ public class SampleQuestions {
 	
 	public static boolean isCorrectApplication(Integer index, String ans){
 		String rightAnswer = questions.get(index).answer;
-//		ans = ans.replaceAll("\\s*", "");
 		Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|\\d+");
 		Matcher rightAns = p.matcher(rightAnswer);
 		String[] answAll = ans.split("\n");
 		String myLastLine = answAll[answAll.length - 1];
 		myLastLine = myLastLine.replaceAll("\\s*", "");
 		Matcher myAns = p.matcher(myLastLine);
-		ArrayList myAnsList = appendResToStr(myAns);
-		ArrayList rightAnsList = appendResToStr(rightAns);
-		if ( isContaining( myAnsList, rightAnsList ) )
-			return true;
-		return false;
-		
+		ArrayList<String> myAnsList = appendResToStr(myAns);
+		ArrayList<String> rightAnsList = appendResToStr(rightAns);
+		return myAnsList.containsAll(rightAnsList);
 	}
 	
 	public static int size(){
@@ -94,19 +90,11 @@ public class SampleQuestions {
 			isLoaded = true;
 		}
 	}
-	public static ArrayList appendResToStr(Matcher content){
-		ArrayList res = new ArrayList();
+	public static ArrayList<String> appendResToStr(Matcher content){
+		ArrayList<String> res = new ArrayList<String>();
 		while(content.find()){
 			res.add(content.group());
 		}
-		return res;
-	}
-	public static Boolean isContaining(ArrayList source, ArrayList target){
-		Integer sourceNum = source.size();
-		Integer targetNum = target.size();
-		Integer i, j;
-		Boolean res = false, tmp = false;
-		res = source.containsAll(target);
 		return res;
 	}
 }
