@@ -106,4 +106,54 @@ public class MathUtilsTest extends TestCase{
 		assertFalse(MathUtils.isEquivalentExp(answer, "1*2*2"));
 		assertFalse(MathUtils.isEquivalentExp(answer, "2*3*3"));
 	}
+	
+	public void testIsEquivalentExp08(){
+		String answer = "1+2+3+4";
+		assertTrue(MathUtils.isEquivalentExp(answer, answer));
+		assertTrue(MathUtils.isEquivalentExp(answer, "1+2+4+3"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "2+1+4+3"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "2+1+3+4"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "4+2+3+1"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "4+2+1+3"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "4+3+2+1"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "4+3+1+2"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "3+4+1+2"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "3+4+2+1"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "1+4+2+3"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "1+4+3+2"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "1+3+2+4"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "1+3+4+2"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "2+3+4+1"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "2+3+1+4"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "3+2+1+4"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "3+2+4+1"));
+		
+		assertTrue(MathUtils.isEquivalentExp(answer, "1+(2+3+4)"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "1+(2+4)+3"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "(2+1+4)+3"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "(2+1)+3+4"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "(1+2)+(3+4)"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "(1+2)+(4+3)"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "(4+3)+(1+2)"));
+		
+//		assertTrue(MathUtils.isEquivalentExp("(1+2)+(3+4)", "(4+2)+(3+1)"));
+//		assertTrue(MathUtils.isEquivalentExp(answer, "(4+2)+(3+1)"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "(4+2+1)+3"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "4+(3+2+1)"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "4+3+(1+2)"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "3+(4+1)+2"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "3+4+2+1"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "1+4+2+3"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "1+4+3+2"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "1+3+2+4"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "1+3+4+2"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "2+3+4+1"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "2+3+1+4"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "3+2+1+4"));
+		assertTrue(MathUtils.isEquivalentExp(answer, "3+2+4+1"));
+		
+		assertFalse(MathUtils.isEquivalentExp(answer, "5+2+3+1"));
+		assertFalse(MathUtils.isEquivalentExp(answer, "1+2+3"));
+		assertFalse(MathUtils.isEquivalentExp(answer, "1+2+3+4+4"));
+	}
 }

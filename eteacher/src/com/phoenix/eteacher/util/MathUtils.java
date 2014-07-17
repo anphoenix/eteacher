@@ -16,6 +16,7 @@ public class MathUtils {
 		private boolean isTree = false;
 		private boolean noSwitch = false;
 		private boolean noChildSwitch = false;
+		private boolean noGrandchildSwitch = false;
 		
 		public Node(String value){
 			this.value = value;
@@ -158,10 +159,10 @@ public class MathUtils {
 			return this.value.hashCode();
 		}
 		
-		private List<Node> getIdenticalTrees(){
-			List<Node> trees = new ArrayList<Node>();
-			List<Node> leftTrees = null;
-			List<Node> rightTrees = null;
+		private Set<Node> getIdenticalTrees(){
+			Set<Node> trees = new HashSet<Node>();
+			Set<Node> leftTrees = null;
+			Set<Node> rightTrees = null;
 			trees.add(this);
 			if(this.left == null && this.right == null){
 				return trees;
@@ -196,19 +197,32 @@ public class MathUtils {
 				trees.addAll(tree.getIdenticalTrees());
 			}
 			
-			if (!noChildSwitch && ((this.value.equals("+") && this.left.value.equals("+")) || (this.value.equals("*") && this.left.value.equals("*")))){
-				Node lNode = new Node(this.left.value, this.right, this.left.right);
-				Node tree = new Node(this.value, lNode, this.left.left);
-				//set this to avoid infinite loop
-				tree.noChildSwitch = true;
-				trees.addAll(tree.getIdenticalTrees());
-				
-				lNode = new Node(this.left.value, this.left.left, this.right);
-				tree = new Node(this.value, lNode, this.left.right);
-				//set this to avoid infinite loop
-				tree.noChildSwitch = true;
-				trees.addAll(tree.getIdenticalTrees());
+			if ((this.value.equals("+") && this.left.value.equals("+")) || (this.value.equals("*") && this.left.value.equals("*"))){
+				if(!noChildSwitch){
+					Node lNode = new Node(this.left.value, this.right, this.left.right);
+					Node tree = new Node(this.value, lNode, this.left.left);
+					//set this to avoid infinite loop
+					tree.noChildSwitch = true;
+					trees.addAll(tree.getIdenticalTrees());
+					
+					lNode = new Node(this.left.value, this.left.left, this.right);
+					tree = new Node(this.value, lNode, this.left.right);
+					//set this to avoid infinite loop
+					tree.noChildSwitch = true;
+					trees.addAll(tree.getIdenticalTrees());
+				}
 			}
+			
+//			if ((this.value.equals("+") && this.left.value.equals("+") && this.right.value.equals("+")) || (this.value.equals("*") && this.left.value.equals("*") && this.right.value.equals("*"))){
+//				if(!noGrandchildSwitch){
+//					Node lNode = new Node(this.left.value, this.right.left, this.left.right);
+//					Node rNode = new Node(this.right.value, this.left.left, this.right.right);
+//					Node tree = new Node(this.value, lNode, rNode);
+//					//set this to avoid infinite loop
+//					tree.noGrandchildSwitch = true;
+//					trees.addAll(tree.getIdenticalTrees());
+//				}
+//			}
 			
 			return trees;
 		}
@@ -309,7 +323,7 @@ public class MathUtils {
 	public static boolean isEquivalentExp(String correctExp, String exp){
 		Node correntTree = getExpressionTree(correctExp);
 		Node tree = getExpressionTree(exp);
-		List<Node> sameTrees = correntTree.getIdenticalTrees();
+		Set<Node> sameTrees = correntTree.getIdenticalTrees();
 		return sameTrees.contains(tree);
 	}
 
@@ -363,15 +377,11 @@ public class MathUtils {
 	public static void main(String[] args) {
 		String exp = "(1+3)*2";
 		Node tree4 = getExpressionTree(exp);
-		List<Node> same = tree4.getIdenticalTrees();
+		Set<Node> same = tree4.getIdenticalTrees();
 		System.out.println("identical: " + same.size());
 		Set<Node> uniq = new HashSet<Node>();
 		uniq.addAll(same);
 		System.out.println("identical: " + uniq.size());
-		
-		same.get(0).print(true);
-		same.get(1).print(true);
-		System.out.println(same.get(0).equals(same.get(5)));
 		
 		String answer = "2*(3+1)";
 		System.err.println("Equivalent: " + isEquivalentExp(answer, exp));
