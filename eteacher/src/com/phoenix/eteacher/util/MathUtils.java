@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.Stack;
 
 public class MathUtils {
-	
+	private static int count = 0;
 	private static class Node{
 		private String value = null;
 		private Node left = null;
@@ -99,14 +99,14 @@ public class MathUtils {
 				System.out.println(this.value);
 			}
 			if(this.left != null){
-				System.out.print(" left: " + this.left.getValue() + " parent: " + this.value);
+				System.out.print(" left: " + this.left.getValue());
 				this.left.print(false);
 			}
 			else{
 				System.out.print("         ");
 			}
 			if(this.right != null){
-				System.out.println(" right: " + this.right.getValue() + " parent: " + this.value);
+				System.out.println(" right: " + this.right.getValue());
 				this.right.print(false);
 			}
 		}
@@ -160,6 +160,7 @@ public class MathUtils {
 		}
 		
 		private Set<Node> getIdenticalTrees(){
+			System.err.println("entering getIdenticalTrees " + count++);
 			Set<Node> trees = new HashSet<Node>();
 			Set<Node> leftTrees = null;
 			Set<Node> rightTrees = null;
@@ -224,11 +225,21 @@ public class MathUtils {
 //				}
 //			}
 			
+			if (this.value.equals("*") && (this.left.value.equals("+") || this.left.value.equals("-"))){
+				Node lNode = new Node(this.value, this.left.left, this.right);
+				Node rNode = new Node(this.value, this.left.right, this.right);
+				Node newNode = new Node(this.left.value, lNode, rNode);
+//				newNode.noChildSwitch = true;
+//				newNode.noGrandchildSwitch = true;
+//				newNode.noSwitch = true;
+				trees.addAll(newNode.getIdenticalTrees());
+			}
+			System.err.println("exiting getIdenticalTrees " + count);
 			return trees;
 		}
 	}
 	
-	private static Node getExpressionTree(String exp){
+	public static Node getExpressionTree(String exp){
 		List<Node> nodes = getPostfixExp(exp);
 		while(!isTreeCompleted(nodes)){
 			for(int i = 0; i < nodes.size(); i++){
@@ -321,10 +332,14 @@ public class MathUtils {
 	}
 	
 	public static boolean isEquivalentExp(String correctExp, String exp){
-		Node correntTree = getExpressionTree(correctExp);
-		Node tree = getExpressionTree(exp);
+		Node correntTree = getExpressionTree(preprocess(correctExp));
+		Node tree = getExpressionTree(preprocess(exp));
 		Set<Node> sameTrees = correntTree.getIdenticalTrees();
 		return sameTrees.contains(tree);
+	}
+
+	private static String preprocess(String exp) {
+		return exp.replaceAll("×", "*");
 	}
 
 	private static boolean isNum(char s){
@@ -376,30 +391,44 @@ public class MathUtils {
 	 */
 	public static void main(String[] args) {
 		String exp = "(1+3)*2";
-		Node tree4 = getExpressionTree(exp);
-		Set<Node> same = tree4.getIdenticalTrees();
-		System.out.println("identical: " + same.size());
-		Set<Node> uniq = new HashSet<Node>();
-		uniq.addAll(same);
-		System.out.println("identical: " + uniq.size());
-		
-		String answer = "2*(3+1)";
-		System.err.println("Equivalent: " + isEquivalentExp(answer, exp));
-		System.err.println("Equivalent: " + isEquivalentExp(answer, "2*3+1"));
-		
-		answer = "1+2+3";
-		List<Node> ansNode = getPostfixExp(answer);
-		for(Node aNode : ansNode){
-			System.out.print(aNode.getValue());
-		}
+//		Node tree4 = getExpressionTree(exp);
+//		Set<Node> same = tree4.getIdenticalTrees();
+//		System.out.println("identical: " + same.size());
+//		Set<Node> uniq = new HashSet<Node>();
+//		uniq.addAll(same);
+//		System.out.println("identical: " + uniq.size());
+//		
+//		String answer = "2*(3+1)";
+//		System.err.println("Equivalent: " + isEquivalentExp(answer, exp));
+//		System.err.println("Equivalent: " + isEquivalentExp(answer, "2*3+1"));
+//		
+//		answer = "1+2+3";
+//		List<Node> ansNode = getPostfixExp(answer);
+//		for(Node aNode : ansNode){
+//			System.out.print(aNode.getValue());
+//		}
+//		
+//		System.out.println();
+//		
+//		exp = "3+1+2";
+//		List<Node> expNode = getPostfixExp(exp);
+//		for(Node aNode : expNode){
+//			System.out.print(aNode.getValue());
+//		}
+//		
+//		System.out.println();
+//		exp = "(1+2)*((3+4)*5+6)";
+//		List<Node> nodes = MathUtils.getPostfixExp(exp);
+//		Node root = MathUtils.getExpressionTree(exp);
+//		for(Node node : nodes){
+//			System.out.print(node.value);
+//		}
 		
 		System.out.println();
+		exp = "(1+2)*(3+4)*5";
+		isEquivalentExp(exp,exp);
 		
-		exp = "3+1+2";
-		List<Node> expNode = getPostfixExp(exp);
-		for(Node aNode : expNode){
-			System.out.print(aNode.getValue());
-		}
+		System.err.println("snow: " + "1+2=3".split("=")[0]);
 	}
 
 }

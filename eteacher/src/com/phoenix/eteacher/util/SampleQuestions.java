@@ -38,7 +38,7 @@ public class SampleQuestions {
 		Matcher myAns = p.matcher(myLastLine);
 		ArrayList<String> myAnsList = appendResToStr(myAns);
 		ArrayList<String> rightAnsList = appendResToStr(rightAns);
-		return myAnsList.containsAll(rightAnsList) && containsKeypoint(ans, getKeyPoints(rightAnswerArr));
+		return myAnsList.containsAll(rightAnsList) && containsKeypoint(answAll, getKeyPoints(rightAnswerArr));
 	}
 	
 	private static String[] getKeyPoints(String[] rightAnswerArr) {
@@ -47,12 +47,12 @@ public class SampleQuestions {
 		return kp;
 	}
 
-	private static boolean containsKeypoint(String ans, String[] keyp) {
-		//remove all white spaces except the new line feed
-		String replaced = ans.replaceAll("\n", "@").replaceAll("\\s*", "").replaceAll("@", "\n");
+	private static boolean containsKeypoint(String[] ans, String[] keyp) {
 		for(String kp : keyp){
-			if(replaced.contains(kp)){
-				return true;
+			for(String an : ans){
+				if(CompareExpression.isTheSame(kp, an.replaceAll("\\s*", "").split("=")[0])){
+					return true;
+				}
 			}
 		}
 		return false;
