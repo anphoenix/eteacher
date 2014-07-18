@@ -494,9 +494,6 @@ public class MathUtils {
 		if(!getPostfixExp(exp, postfix)){
 			return false;
 		}
-		for(Node node : postfix){
-			System.err.println("snow: " + node.getValue());
-		}
 		Node tree = getExpressionTree(postfix);
 		if(tree == null){
 			return false;
