@@ -437,7 +437,6 @@ public class MathUtils {
 		isEquivalentExp(exp,exp);
 		
 		System.err.println("snow: " + "1+2=3".split("=")[0]);
-<<<<<<< HEAD
 	}
 
 	public static ArrayList<String> appendResToStr(Matcher content){
@@ -453,8 +452,6 @@ public class MathUtils {
 		Matcher matcherAns = p.matcher( line );
 		ArrayList<String> ansExpression = MathUtils.appendResToStr(matcherAns);
 		return ansExpression;
-=======
->>>>>>> 14d7804c44f0f9161ae4f85f43bc7da027330ea3
 	}
 
 }
