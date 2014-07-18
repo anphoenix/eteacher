@@ -1,6 +1,5 @@
 package com.phoenix.eteacher.util;
 
-
 import junit.framework.TestCase;
 
 public class MathUtilsTest extends TestCase{
@@ -245,4 +244,31 @@ public class MathUtilsTest extends TestCase{
 			assertTrue(MathUtils.isTheSame(answer, "(3+4) * 1/5 + (3+4)*2 * 1/5"));
 //			assertTrue(MathUtils.isTheSame(answer, "(1+2)×[3+4]/5 + 1 * 1/5 + 2 * 1/5"));
 		}
+	
+	public void testIsExpression(){
+		String exp = "1+2+3";
+		assertTrue(MathUtils.isExpression(exp));
+		assertTrue(MathUtils.isExpression("(1+2+3.1)*4-5.5/6"));
+		assertTrue(MathUtils.isExpression("(1+2+3.1)*4-5.5/6.00+1/2/3"));
+		assertTrue(MathUtils.isExpression("(1+2+3.1)*4-(5.5/6.00+1/2)/3"));
+		assertTrue(MathUtils.isExpression("(1+(2+3.1))*4-(5.5/6.00+1/2)/3"));
+		
+		assertFalse(MathUtils.isExpression("1+2+"));
+		assertFalse(MathUtils.isExpression("*1+2"));
+		assertFalse(MathUtils.isExpression("(1+2)+"));
+		assertFalse(MathUtils.isExpression("(1+2)*3-"));
+		assertFalse(MathUtils.isExpression("(1+2"));
+		assertFalse(MathUtils.isExpression("1+2)"));
+		assertFalse(MathUtils.isExpression("(1+2)3"));
+		
+		assertFalse(MathUtils.isExpression("(1+2*"));
+		assertFalse(MathUtils.isExpression("1+2)*"));
+		
+		assertFalse(MathUtils.isExpression("(1+2+3.1)*4-+5.50/6"));
+		assertFalse(MathUtils.isExpression("(1+2+3..1)*4-5.50/6"));
+		assertFalse(MathUtils.isExpression("(1+*2+3.1)*4-5.50/6"));
+		assertFalse(MathUtils.isExpression("(1+(2+3.1)*4-5.50/6"));
+		assertFalse(MathUtils.isExpression("(1+(2+3.1)*4)-(5.50/6"));
+		assertFalse(MathUtils.isExpression("(1+(2+3.1)*4)-5.50)/6"));
+	}
 }

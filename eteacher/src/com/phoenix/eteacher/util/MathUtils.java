@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MathUtils {
-	private static int count = 0;
+	
 	private static class Node{
 		private String value = null;
 		private Node left = null;
@@ -26,10 +26,15 @@ public class MathUtils {
 		}
 		
 		private void setType(String value) {
+			this.value = value;
+			setType();
+		}
+		
+		private void setType() {
 			if(isOperator(value)){
 				this.isOpt = true;
 			}
-			else if(isNum(value)){
+			else if(isFloatNum(value)){
 				this.isOpt = false;
 			}
 			else{
@@ -96,6 +101,16 @@ public class MathUtils {
 			}
 		}
 		
+		private static boolean isFloatNum(String s){
+			try{
+				Float.parseFloat(s);
+				return true;
+			}
+			catch(Exception ex){
+				return false;
+			}
+		}
+		
 		public void print(boolean printValue){
 			if(printValue){
 				System.out.println(this.value);
@@ -122,6 +137,16 @@ public class MathUtils {
 				i += this.right.nodeCount();
 			}
 			return i;
+		}
+		
+		public boolean isExpression(){
+			if (isOpt && (left == null || right == null)){
+				return false;
+			}
+			if(!isOpt && (left != null || right != null)){
+				return false;
+			}
+			return true;
 		}
 		
 		@Override
@@ -162,7 +187,6 @@ public class MathUtils {
 		}
 		
 		private Set<Node> getIdenticalTrees(){
-			System.err.println("entering getIdenticalTrees " + count++);
 			Set<Node> trees = new HashSet<Node>();
 			Set<Node> leftTrees = null;
 			Set<Node> rightTrees = null;
@@ -231,18 +255,115 @@ public class MathUtils {
 				Node lNode = new Node(this.value, this.left.left, this.right);
 				Node rNode = new Node(this.value, this.left.right, this.right);
 				Node newNode = new Node(this.left.value, lNode, rNode);
-//				newNode.noChildSwitch = true;
-//				newNode.noGrandchildSwitch = true;
-//				newNode.noSwitch = true;
 				trees.addAll(newNode.getIdenticalTrees());
 			}
-			System.err.println("exiting getIdenticalTrees " + count);
 			return trees;
 		}
 	}
 	
+	public static boolean getPostfixExp(String exp, List<Node> sb){
+		Stack<String> st = new Stack<String>();
+		List<String> eval = new ArrayList<String>();
+		String popUp;
+		for(int i = 0; i < exp.length(); i++){
+			char op = exp.charAt(i);
+			if(isOpt(op)){
+				if(st.isEmpty() || st.peek().equals("(") || isHigher(op,st.peek())){
+					st.push(op+"");
+				}
+				else{
+					popUp = st.pop();
+					if(!check(popUp)){
+						return false;
+					}
+					sb.add(new Node(popUp));
+					eval.add(popUp);
+					st.push(op+"");
+				}
+			}
+			else if(op == '('){
+				st.push(op+"");
+			}
+			else if(op == ')'){
+				if(st.size() < 1){
+					return false;
+				}
+				while(!st.peek().equals("(")){
+					popUp = st.pop();
+					if(!check(popUp)){
+						return false;
+					}
+					sb.add(new Node(popUp));
+					eval.add(popUp);
+					if(st.size() < 1){
+						return false;
+					}
+				}
+				st.pop();
+			}
+			else{
+				int j = 0;
+				while(i+j<exp.length() && isNumOrDot(exp.charAt(i+j))){
+					j++;
+				}
+				if(!check(exp.substring(i, i+j))){
+					return false;
+				}
+				sb.add(new Node(exp.substring(i, i+j)));
+				eval.add(exp.substring(i, i+j));
+				i = i + j - 1;
+			}
+		}
+		while(!st.isEmpty()){
+			popUp = st.pop();
+			if(!check(popUp)){
+				return false;
+			}
+			sb.add(new Node(popUp));
+			eval.add(popUp);
+		}
+		for(int i = 0; i < eval.size(); i++){
+			if (isOpt(eval.get(i))){
+				if(st.size() < 2){
+					return false;
+				}
+				float b = Float.parseFloat(st.pop());
+				float a = Float.parseFloat(st.pop());
+				st.push(String.valueOf(compute(eval.get(i).charAt(0),a,b)));
+			}
+			else{
+				st.push(eval.get(i));
+			}
+		}
+		while(!st.isEmpty()){
+			st.pop();
+		}
+		return true;
+	}
+	
+	private static boolean check(String ele) {
+		return isFloatNum(ele) || isOpt(ele);
+	}
+
+	private static boolean isFloatNum(String s){
+		try{
+			Float.parseFloat(s);
+			return true;
+		}
+		catch(Exception ex){
+			return false;
+		}
+	}
+	
+	
+	
 	public static Node getExpressionTree(String exp){
-		List<Node> nodes = getPostfixExp(exp);
+		List<Node> nodes = new ArrayList<Node>();
+		getPostfixExp(exp, nodes);
+		return getExpressionTree(nodes);
+	}
+	
+	public static Node getExpressionTree(List<Node> nodes){
 		while(!isTreeCompleted(nodes)){
 			for(int i = 0; i < nodes.size(); i++){
 				if(nodes.get(i).isOpt() && !nodes.get(i-1).isOpt() && !nodes.get(i-2).isOpt()){
@@ -260,6 +381,9 @@ public class MathUtils {
 				}
 			}
 		}
+		if(nodes.size() != 1){
+			return null;
+		}
 		return nodes.get(0);
 	}
 	
@@ -272,66 +396,7 @@ public class MathUtils {
 		return true;
 	}
 
-	public static List<Node> getPostfixExp(String exp){
-		List<Node> sb = new ArrayList<Node>();
-		Stack<String> st = new Stack<String>();
-		List<String> eval = new ArrayList<String>();
-		String popUp;
-		for(int i = 0; i < exp.length(); i++){
-			char op = exp.charAt(i);
-			if(isOpt(op)){
-				if(st.isEmpty() || st.peek().equals("(") || isHigher(op,st.peek())){
-					st.push(op+"");
-				}
-				else{
-					popUp = st.pop();
-					sb.add(new Node(popUp));
-					eval.add(popUp);
-					st.push(op+"");
-				}
-			}
-			else if(op == '('){
-				st.push(op+"");
-			}
-			else if(op == ')'){
-				while(!st.peek().equals("(")){
-					popUp = st.pop();
-					sb.add(new Node(popUp));
-					eval.add(popUp);
-				}
-				st.pop();
-			}
-			else{
-				int j = 0;
-				while(i+j<exp.length() && isNum(exp.charAt(i+j))){
-					j++;
-				}
-				sb.add(new Node(exp.substring(i, i+j)));
-				eval.add(exp.substring(i, i+j));
-				i = i + j - 1;
-			}
-		}
-		while(!st.isEmpty()){
-			popUp = st.pop();
-			sb.add(new Node(popUp));
-			eval.add(popUp);
-		}
-		for(int i = 0; i < eval.size(); i++){
-			if (isOpt(eval.get(i))){
-				float b = Float.parseFloat(st.pop());
-				float a = Float.parseFloat(st.pop());
-				st.push(String.valueOf(compute(eval.get(i).charAt(0),a,b)));
-			}
-			else{
-				st.push(eval.get(i));
-			}
-		}
-		while(!st.isEmpty()){
-			st.pop();
-//			System.err.println("eval2: " + st.pop());
-		}
-		return sb;
-	}
+	
 	
 	public static boolean isEquivalentExp(String correctExp, String exp){
 		Node correntTree = getExpressionTree(preprocess(correctExp));
@@ -352,6 +417,10 @@ public class MathUtils {
 		catch(Exception ex){
 			return false;
 		}
+	}
+	
+	private static boolean isNumOrDot(char s){
+		return isNum(s) || s == '.';
 	}
 	
 	private static float compute(char op, float a, float b){
@@ -399,44 +468,10 @@ public class MathUtils {
 	 */
 	public static void main(String[] args) {
 		String exp = "(1+3)*2";
-//		Node tree4 = getExpressionTree(exp);
-//		Set<Node> same = tree4.getIdenticalTrees();
-//		System.out.println("identical: " + same.size());
-//		Set<Node> uniq = new HashSet<Node>();
-//		uniq.addAll(same);
-//		System.out.println("identical: " + uniq.size());
-//		
-//		String answer = "2*(3+1)";
-//		System.err.println("Equivalent: " + isEquivalentExp(answer, exp));
-//		System.err.println("Equivalent: " + isEquivalentExp(answer, "2*3+1"));
-//		
-//		answer = "1+2+3";
-//		List<Node> ansNode = getPostfixExp(answer);
-//		for(Node aNode : ansNode){
-//			System.out.print(aNode.getValue());
-//		}
-//		
-//		System.out.println();
-//		
-//		exp = "3+1+2";
-//		List<Node> expNode = getPostfixExp(exp);
-//		for(Node aNode : expNode){
-//			System.out.print(aNode.getValue());
-//		}
-//		
-//		System.out.println();
-//		exp = "(1+2)*((3+4)*5+6)";
-//		List<Node> nodes = MathUtils.getPostfixExp(exp);
-//		Node root = MathUtils.getExpressionTree(exp);
-//		for(Node node : nodes){
-//			System.out.print(node.value);
-//		}
 		
 		System.out.println();
 		exp = "(1+2)*(3+4)*5";
 		isEquivalentExp(exp,exp);
-		
-		System.err.println("snow: " + "1+2=3".split("=")[0]);
 	}
 
 	public static ArrayList<String> appendResToStr(Matcher content){
@@ -454,4 +489,19 @@ public class MathUtils {
 		return ansExpression;
 	}
 
+	public static boolean isExpression(String exp){
+		List<Node> postfix = new ArrayList<Node>();
+		if(!getPostfixExp(exp, postfix)){
+			return false;
+		}
+		for(Node node : postfix){
+			System.err.println("snow: " + node.getValue());
+		}
+		Node tree = getExpressionTree(postfix);
+		if(tree == null){
+			return false;
+		}
+		tree.setType();
+		return tree.isExpression();
+	}
 }
