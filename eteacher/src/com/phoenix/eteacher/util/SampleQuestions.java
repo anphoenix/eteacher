@@ -36,15 +36,9 @@ public class SampleQuestions {
 		String myLastLine = answAll[answAll.length - 1];
 //		myLastLine = myLastLine.replaceAll("\\s*", "");
 		Matcher myAns = p.matcher(myLastLine);
-<<<<<<< HEAD
 		ArrayList<String> myAnsList = MathUtils.appendResToStr(myAns);
 		ArrayList<String> rightAnsList = MathUtils.appendResToStr(rightAns);
 		return myAnsList.containsAll(rightAnsList) && isCorrect(answAll, getKeyPoints(rightAnswerArr));
-=======
-		ArrayList<String> myAnsList = appendResToStr(myAns);
-		ArrayList<String> rightAnsList = appendResToStr(rightAns);
-		return myAnsList.containsAll(rightAnsList) && containsKeypoint(answAll, getKeyPoints(rightAnswerArr));
->>>>>>> 14d7804c44f0f9161ae4f85f43bc7da027330ea3
 	}
 	
 	private static String[] getKeyPoints(String[] rightAnswerArr) {
@@ -53,19 +47,10 @@ public class SampleQuestions {
 		return kp;
 	}
 
-<<<<<<< HEAD
 	private static boolean containsKeypoint(String ans, String[] keyp) {
 		for(String kp : keyp){
 			if(MathUtils.isTheSame(kp, ans.replaceAll("\\s*", ""))){
 				return true;
-=======
-	private static boolean containsKeypoint(String[] ans, String[] keyp) {
-		for(String kp : keyp){
-			for(String an : ans){
-				if(CompareExpression.isTheSame(kp, an.replaceAll("\\s*", "").split("=")[0])){
-					return true;
-				}
->>>>>>> 14d7804c44f0f9161ae4f85f43bc7da027330ea3
 			}
 		}
 		return false;
