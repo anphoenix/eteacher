@@ -15,12 +15,9 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class TextRecognitionFragment extends Fragment {
@@ -44,10 +41,8 @@ public class TextRecognitionFragment extends Fragment {
 	        @Override
 	        public void onClick(View v) {
 	        	if (TestActivity.curQuestionIndex < SampleQuestions.questions.size() - 1){
-		        	TestActivity.setAnswer(TestActivity.curQuestionIndex, mEditText.getText().toString().trim());
-		        	mLabelText.setText(SampleQuestions.getReadableQuestion(++TestActivity.curQuestionIndex));
+	        		activity.setNewQuestion();
 		        	String answer = TestActivity.getAnswer(TestActivity.curQuestionIndex);
-		        	mEditText.setText(answer);
 		        	mWidget.setText(answer);
 		        	return;
 	        	}
@@ -65,10 +60,8 @@ public class TextRecognitionFragment extends Fragment {
 	        @Override
 	        public void onClick(View v) {
 	        	if (TestActivity.curQuestionIndex > 0){
-	        		TestActivity.setAnswer(TestActivity.curQuestionIndex, mEditText.getText().toString().trim());
-	        		mLabelText.setText(SampleQuestions.getReadableQuestion(--TestActivity.curQuestionIndex));
+	        		activity.setPrevQuestion();
 		        	String answer = TestActivity.getAnswer(TestActivity.curQuestionIndex);
-		        	mEditText.setText(answer);
 		        	mWidget.setText(answer);
 		        	return;
 	        	}
@@ -81,7 +74,6 @@ public class TextRecognitionFragment extends Fragment {
 	    toolbarView.findViewById(R.id.vo_tw_enterButton).setOnClickListener(new View.OnClickListener() {
 	        @Override
 	        public void onClick(View v) {
-//	        	mEditText.append("\n");
 	        	mWidget.setText(mEditText.getText().toString() + "\n");
 	        }
 	      });

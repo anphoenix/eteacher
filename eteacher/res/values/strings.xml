@@ -14,5 +14,6 @@
     <string name="result_title">你的成绩</string>
     <string name="toolbar_clear_label">Clear</string>
     <string name="toolbar_text_label">Text</string>
+    <string name="your_answer_label">你的答案</string>
 
 </resources>

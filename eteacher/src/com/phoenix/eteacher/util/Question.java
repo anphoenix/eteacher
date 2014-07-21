@@ -1,5 +1,8 @@
 package com.phoenix.eteacher.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Question{
 	public static int TYPE_CHOICE = 2;
 	public static int TYPE_COMPLETION = 1;
@@ -7,6 +10,7 @@ public class Question{
 	Integer ID;
 	String question;
 	String answer;
+	List<String> pictures = new ArrayList<String>();
 	Integer type;
 	public Question(Integer type, Integer ID, String question, String answer) {
 		super();
@@ -40,11 +44,22 @@ public class Question{
 		this.type = type;
 	}
 	
+	
+	public List<String> getPictures() {
+		return pictures;
+	}
+	public void setPictures(List<String> pictures) {
+		this.pictures = pictures;
+	}
+	
+	public boolean hasPicture(){
+		return pictures.size() > 0;
+	}
 	public String getReadableQuestion(Integer index){
 		StringBuilder builder = new StringBuilder();
 		builder.append("第" + (index+1) + "题 (" + getReadableType() + ")\n");
 		builder.append(question);
-		builder.append("\n你的答案:");
+//		builder.append("\n你的答案:");
 		return builder.toString();
 	}
 	
@@ -60,7 +75,8 @@ public class Question{
 		Integer type = Integer.parseInt(ss[0]);
 		Integer ID = Integer.parseInt(ss[1]);
 		String[] ques = ss[2].split("@");
-		String question = ques[0];
+		String[] questionSplits = ques[0].split("&");
+		String question = questionSplits[0];
 		if(type == Question.TYPE_CHOICE){
 			StringBuilder builder = new StringBuilder();
 			String[] choices = question.split("  ");
@@ -70,7 +86,12 @@ public class Question{
 			}
 			question = builder.toString();
 		}
-		return new Question(type, ID, question, ques[1]);
+		Question que = new Question(type, ID, question, ques[1]);
+		if(questionSplits.length > 1 && questionSplits[1].startsWith("P") && questionSplits[1].length() > 3){
+			String pic = questionSplits[1].substring(2, questionSplits[1].length()-1);
+			que.getPictures().add(pic);
+		}
+		return que;
 	}
 	
 	public static void main(String[] args){

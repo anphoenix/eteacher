@@ -1,5 +1,6 @@
 package com.phoenix.eteacher;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -21,11 +22,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.phoenix.eteacher.R;
 import com.phoenix.eteacher.controller.CandidateBarController;
 import com.phoenix.eteacher.controller.ToolbarController;
 import com.phoenix.eteacher.reco.EditionBehavior;
+import com.phoenix.eteacher.util.Question;
 import com.phoenix.eteacher.util.SampleQuestions;
 import com.phoenix.eteacher.util.SimpleResourceHelper;
 import com.phoenix.eteacher.view.CustomEditText;
@@ -69,7 +72,9 @@ public class TestActivity extends Activity implements
 
 	private CustomEditText mEditText;
 	private TextView mLabelText;
-
+	private TextView mYourAnswerLabelText;
+	private ImageView image;
+	
 	private ScrollView scroll;
 
 	private TextWidget mWidget = null;
@@ -137,6 +142,8 @@ public class TestActivity extends Activity implements
 
 		mLabelText = (TextView) findViewById(R.id.labelTextField);
 
+		mYourAnswerLabelText = (TextView) findViewById(R.id.labelYourAnswer);
+		
 		scroll = (ScrollView) findViewById(R.id.scrollView);
 
 		Intent intent = getIntent();
@@ -146,6 +153,8 @@ public class TestActivity extends Activity implements
 			idx = intent.getExtras().getInt("questionIdx");
 
 		mLabelText.setText(SampleQuestions.getReadableQuestion(idx));
+		mYourAnswerLabelText.setText(R.string.your_answer_label);
+		setImage(idx);
 
 		if (findViewById(R.id.fragment_container) != null) {
 
@@ -154,9 +163,7 @@ public class TestActivity extends Activity implements
 			}
 
 			TextRecognitionFragment textFragment = new TextRecognitionFragment();
-
 			textFragment.setArguments(getIntent().getExtras());
-
 			getFragmentManager().beginTransaction()
 					.add(R.id.fragment_container, textFragment).commit();
 		}
@@ -193,6 +200,23 @@ public class TestActivity extends Activity implements
 			}
 
 		});
+	}
+
+	private void setImage(int idx) {
+		Question que = SampleQuestions.getQuestion(idx);
+		image = (ImageView) findViewById(R.id.questionImage);
+		if(que.hasPicture()){
+			try{
+				Field field = R.drawable.class.getDeclaredField(que.getPictures().get(0));
+				image.setImageResource(field.getInt(null));
+			}
+			catch(Exception ex){
+				ex.printStackTrace();
+			}
+		}
+		else{
+			image.setImageDrawable(null);
+		}
 	}
 
 	@Override
@@ -505,6 +529,22 @@ public class TestActivity extends Activity implements
 	public void onConfigurationEnd(boolean arg0) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void setNewQuestion() {
+		TestActivity.setAnswer(curQuestionIndex, mEditText.getText().toString().trim());
+    	mLabelText.setText(SampleQuestions.getReadableQuestion(++curQuestionIndex));
+    	String answer = TestActivity.getAnswer(TestActivity.curQuestionIndex);
+    	mEditText.setText(answer);
+    	setImage(curQuestionIndex);
+	}
+
+	public void setPrevQuestion() {
+		setAnswer(curQuestionIndex, mEditText.getText().toString().trim());
+		mLabelText.setText(SampleQuestions.getReadableQuestion(--curQuestionIndex));
+    	String answer = getAnswer(curQuestionIndex);
+    	mEditText.setText(answer);
+    	setImage(curQuestionIndex);
 	}
 
 }
