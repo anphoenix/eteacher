@@ -137,7 +137,9 @@ public class MathRecognitionFragment extends Fragment{
 	        @Override
 	        public void onClick(View v) {
 	        	String oldStr = mEditText.getText().toString();
-	        	mEditText.setText(oldStr.substring(0, oldStr.length() - 1));
+	        	if(oldStr.length() > 0){
+	        		mEditText.setText(oldStr.substring(0, oldStr.length() - 1));
+	        	}
 	        }
 	    });
 	    
